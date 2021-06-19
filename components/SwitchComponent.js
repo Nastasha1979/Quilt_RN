@@ -6,6 +6,7 @@ import Articles from "./ArticlesComponent";
 import Inspiration from "./InspirationComponent";
 import Newsletter from "./NewsletterComponent";
 import About from "./AboutComponent";
+import ClassDetail from "./ClassDetailsComponent";
 import Constants from "expo-constants";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
@@ -78,9 +79,11 @@ const ArticlesNavigator = createStackNavigator (
 
 const ClassesNavigator = createStackNavigator (
     {
-        Directory: { screen: Classes }    
+        Classes: { screen: Classes },
+        ClassDetail: { screen: ClassDetail }    
     },
     {
+        initialRouteName: "Classes",
         defaultNavigationOptions: {
             headerTitleAlign: {
                 textAlign: "center"

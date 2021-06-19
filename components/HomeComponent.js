@@ -55,7 +55,7 @@ const style = StyleSheet.create({
     },
     bottomText: {
         textAlign: "center",
-        paddingTop: 210,
+        paddingTop: 200,
         fontSize: 22
     }
 
