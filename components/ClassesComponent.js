@@ -3,16 +3,17 @@ import { View, Text } from "react-native";
 import { Card, Button } from "react-native-elements";
 import { FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
-import CLASSES_DATA from "../shared/ClassesData";
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
 
+const mapStateToProps = state => {
+    return{
+        classesData: state.classesData
+    };
+};
 
 class Classes extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            classesData: CLASSES_DATA
-        }
-    }
+    
     static navigationOptions = {
         title: "Classes"
     }
@@ -21,10 +22,11 @@ class Classes extends Component {
         const { navigate } = this.props.navigation;
 
         const renderClassItem = ({item}) => {
+            console.log(item);
             return(
                 <ListItem style={{flex: 1}}>
                     <Card style={{alignSelf: "stretch"}}>
-                        <Card.Image source={require('./assets/class1.jpg')} />
+                        <Card.Image source={{source: {uri: baseUrl + item.pic}}} />
                         <Card.Title>{item.title}</Card.Title>
                         <Text style={{marginBottom: 10}}>
                             {item.description}
@@ -43,7 +45,7 @@ class Classes extends Component {
             <View>
                 <Text style={{textAlign: "center", fontSize: 22, paddingTop: 10, fontWeight: "bold"}}>Available Classes</Text>
                 <FlatList
-                    data={this.state.classesData}
+                    data={this.props.classesData.classesData}
                     renderItem={renderClassItem}
                     keyExtractor={item => item.id.toString()}
                 >
@@ -53,4 +55,4 @@ class Classes extends Component {
     }
 }
 
-export default Classes;
+export default connect(mapStateToProps)(Classes);

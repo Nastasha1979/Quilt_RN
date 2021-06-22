@@ -11,7 +11,17 @@ import Constants from "expo-constants";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
-import { nodeName } from "min-document";
+import { connect } from "react-redux";
+import { fetchClasses, fetchComments, fetchClassInfo, fetchArticles, fetchCarousel } from "../redux/ActionCreators";
+
+
+const mapDispatchToProps = {
+    fetchClasses, 
+    fetchComments, 
+    fetchClassInfo, 
+    fetchArticles, 
+    fetchCarousel
+};
 
 const AboutNavigator = createStackNavigator (
     {
@@ -131,6 +141,13 @@ const AppNavigator = createAppContainer(SwitchNavigator);
 
 class Switch extends Component {
 
+    componentDidMount() {
+        this.props.fetchClasses();
+        this.props.fetchClassInfo();
+        this.props.fetchArticles();
+        this.props.fetchCarousel();
+        this.props.fetchComments();
+    }
     render() {
         return(
             <View 
@@ -146,4 +163,4 @@ class Switch extends Component {
     }
 }
 
-export default Switch;
+export default connect(null, mapDispatchToProps)(Switch);

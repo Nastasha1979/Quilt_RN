@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import { View, FlatList, ScrollView } from "react-native";
 import { Card, Text, ListItem, Button } from "react-native-elements";
-import CLASS_INFO from "../shared/ClassInfoData";
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
 
+const mapStateToProps = state => {
+    return{
+        classInfo: state.classInfo
+    };
+};
 
 
 function RenderClass({classStuff}){
@@ -18,7 +24,7 @@ function RenderClass({classStuff}){
                     key={classStuff.id}
                 >
                     <Card.Title>{classStuff.title}</Card.Title>
-                    <Card.Image source={require('./assets/class1.jpg')} />   
+                    <Card.Image source={{source: {uri: baseUrl + classStuff.picUrl}}} />   
                 </Card>
                 <View>
                     <Text h4>
@@ -54,6 +60,10 @@ function RenderClass({classStuff}){
                     title="Sign Up"
                     type="solid"
                 />
+                <Button
+                    title="Go To Class"
+                    type="solid"
+                />
             </ScrollView>
         );
     }
@@ -62,12 +72,6 @@ function RenderClass({classStuff}){
 }
 
 class ClassDetail extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            classInfos: CLASS_INFO
-        }
-    }
 
     static navigationOptions = {
         title: "Class Detail"
@@ -76,7 +80,7 @@ class ClassDetail extends Component {
 
     render() {
         const classId = this.props.navigation.getParam("classId");
-        const classStuff = this.state.classInfos.filter(classInfo => classInfo.id === +classId)[0];
+        const classStuff = this.props.classInfo.classInfo.filter(classInfo => classInfo.id === +classId)[0];
         return(
             <View>
                 <RenderClass classStuff={classStuff} />
@@ -86,4 +90,4 @@ class ClassDetail extends Component {
     }
 }
 
-export default ClassDetail;
+export default connect(mapStateToProps)(ClassDetail);
