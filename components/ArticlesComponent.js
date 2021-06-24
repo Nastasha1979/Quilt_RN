@@ -32,18 +32,14 @@ class Articles extends Component {
         const { navigate } = this.props.navigation;
         const RenderArticles = ({item}) => {
             return(
-                <ListItem.Accordion 
-                    content={
-                        <ListItem.Content>
-                            <ListItem.Title>{item.title}</ListItem.Title>
-                            <ListItem.Subtitle>{item.author}</ListItem.Subtitle>
-                        </ListItem.Content>
-                    }
-                    isExpanded={this.state.expanded}
-                    onPress={() => {this.toggleExpanded}}
+                <ListItem
+                    onPress={() => navigate("ArticleDetail", {articleId: item.id})}
                 >   
-                    <Text>{item.author}, {item.title}</Text>
-                </ListItem.Accordion>
+                    <ListItem.Content>
+                        <ListItem.Title>{item.title}</ListItem.Title>
+                        <ListItem.Subtitle>{item.author}</ListItem.Subtitle>
+                    </ListItem.Content>
+                </ListItem>
             );
         }
 

@@ -9,6 +9,7 @@ import About from "./AboutComponent";
 import ClassDetail from "./ClassDetailsComponent";
 import Classroom from "./ClassroomComponent";
 import InspireDetail from "./InspireDetailComponent";
+import ArticleDetail from "./ArticleDetailComponent";
 import Constants from "expo-constants";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
@@ -77,9 +78,11 @@ const InspirationNavigator = createStackNavigator (
 
 const ArticlesNavigator = createStackNavigator (
     {
-        Articles: { screen: Articles }
+        Articles: { screen: Articles },
+        ArticleDetail: { screen : ArticleDetail }
     },
     {
+        initialRouteName: "Articles",
         defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: "#faeddd"
