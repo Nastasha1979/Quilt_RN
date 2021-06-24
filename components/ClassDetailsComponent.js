@@ -13,7 +13,8 @@ const mapStateToProps = state => {
 
 
 function RenderClass({classStuff, navigate}){
-    const [button, toggleButton] = useState(true);
+    const [button, toggleButton] = useState(false);
+
 
     if(classStuff){
 
@@ -54,19 +55,24 @@ function RenderClass({classStuff, navigate}){
                         {classStuff.description}
                     </Text>
                 </View>
-                <Button
-                    title="Sign Up"
-                    type="solid"
-                    buttonStyle={style.button}
-                    titleStyle={style.buttonTitle}
-                />
-                <Button
-                    title="Go To Class"
-                    type="solid"
-                    buttonStyle={style.button}
-                    titleStyle={style.buttonTitle}
-                    onPress={() => navigate("Classroom", {classId: classStuff.id })}
-                />
+                {!button &&
+                    <Button
+                        title="Sign Up"
+                        type="solid"
+                        buttonStyle={style.button}
+                        titleStyle={style.buttonTitle}
+                        onPress={() => toggleButton(!button)}
+                    />
+                }
+                {button && 
+                    <Button
+                        title="Go To Class"
+                        type="solid"
+                        buttonStyle={style.button}
+                        titleStyle={style.buttonTitle}
+                        onPress={() => navigate("Classroom", {classId: classStuff.id })}
+                    />
+                }
             </ScrollView>
         );
     }

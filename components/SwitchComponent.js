@@ -8,6 +8,7 @@ import Newsletter from "./NewsletterComponent";
 import About from "./AboutComponent";
 import ClassDetail from "./ClassDetailsComponent";
 import Classroom from "./ClassroomComponent";
+import InspireDetail from "./InspireDetailComponent";
 import Constants from "expo-constants";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
@@ -58,9 +59,11 @@ const NewsletterNavigator = createStackNavigator (
 
 const InspirationNavigator = createStackNavigator (
     {
-        Inspiration: { screen: Inspiration }
+        Inspiration: { screen: Inspiration },
+        InspireDetail: { screen: InspireDetail}
     },
     {
+        initialRouteName: "Inspiration",
         defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: "#faeddd"
