@@ -5,7 +5,7 @@ export const fetchClasses = () => dispatch => {
 
     dispatch(classesLoading());
 
-    return fetch(baseUrl + "classes")
+    return fetch(baseUrl + "classesData")
         .then(response => {
             if(response.ok) {
                 return response;
@@ -33,7 +33,7 @@ export const classesFailed = errMess => ({
     payload: errMess
 });
 
-export const addClasses = classes => ({
+export const addClasses = classesData => ({
     type: ActionTypes.ADD_CLASSES,
     payload: classesData
 });

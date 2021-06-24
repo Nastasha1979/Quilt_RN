@@ -26,7 +26,7 @@ class Classes extends Component {
             return(
                 <ListItem style={{flex: 1}}>
                     <Card style={{alignSelf: "stretch"}}>
-                        <Card.Image source={{source: {uri: baseUrl + item.pic}}} />
+                        <Card.Image source={{uri: baseUrl + item.pic}} />
                         <Card.Title>{item.title}</Card.Title>
                         <Text style={{marginBottom: 10}}>
                             {item.description}

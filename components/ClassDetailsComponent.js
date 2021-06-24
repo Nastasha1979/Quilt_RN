@@ -24,7 +24,7 @@ function RenderClass({classStuff}){
                     key={classStuff.id}
                 >
                     <Card.Title>{classStuff.title}</Card.Title>
-                    <Card.Image source={{source: {uri: baseUrl + classStuff.picUrl}}} />   
+                    <Card.Image source={{uri: baseUrl + classStuff.picUrl}} />   
                 </Card>
                 <View>
                     <Text h4>
