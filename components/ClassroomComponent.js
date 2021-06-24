@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, ScrollView, StyleSheet } from "react-native";
-import { Text, ListItem } from "react-native-elements";
+import { Text, ListItem, Input, Button, Icon } from "react-native-elements";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { FlatList } from "react-native-gesture-handler";
 
@@ -20,7 +20,7 @@ function RenderVideo({classStuff}) {
             </View>
             <View>
                 <YoutubePlayer
-                    height={300}
+                    height={250}
                     play={false}
                     videoId={classStuff.youtube}
                 />
@@ -52,6 +52,27 @@ function RenderComments({comments}){
     );
 }
 
+function PostComment(){
+    return(
+        <View>
+            <Input
+                placeholder='Your Comment'
+            />
+            <Button
+                icon={
+                    <Icon
+                    name="edit"
+                    type="font-awesome"
+                    size={24}
+                    />
+                }
+                title="Post Comment"
+                type="clear"
+            />
+        </View>
+    );
+}
+
 class Classroom extends Component {
     constructor(props) {
         super(props);
@@ -76,7 +97,7 @@ class Classroom extends Component {
             <View>
                 <RenderVideo classStuff={classStuff} />
                 <RenderComments comments={comments} />
-                
+                <PostComment />
             </View>
         );
     }
