@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { View, FlatList, ScrollView, StyleSheet } from "react-native";
 import { Text, ListItem, Button, Tile } from "react-native-elements";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
-import Classroom from "./ClassroomComponent";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 
@@ -14,7 +13,7 @@ const mapStateToProps = state => {
 
 
 function RenderClass({classStuff, navigate}){
-    
+    const [button, toggleButton] = useState(true);
 
     if(classStuff){
 
@@ -58,10 +57,14 @@ function RenderClass({classStuff, navigate}){
                 <Button
                     title="Sign Up"
                     type="solid"
+                    buttonStyle={style.button}
+                    titleStyle={style.buttonTitle}
                 />
                 <Button
                     title="Go To Class"
                     type="solid"
+                    buttonStyle={style.button}
+                    titleStyle={style.buttonTitle}
                     onPress={() => navigate("Classroom", {classId: classStuff.id })}
                 />
             </ScrollView>
@@ -83,7 +86,7 @@ class ClassDetail extends Component {
         const classStuff = this.props.classInfo.classInfo.filter(classInfo => classInfo.id === +classId)[0];
         const { navigate } = this.props.navigation;
         return(
-            <View>
+            <View style={style.wholeView}>
                 <RenderClass classStuff={classStuff} navigate={navigate}/>
             </View>
 
@@ -93,6 +96,19 @@ class ClassDetail extends Component {
 
 
 const style = StyleSheet.create({
+    wholeView: {
+        flex: 1
+    },
+    button: {
+        backgroundColor: "#faeddd",
+        width: 125,
+        justifyContent: "center",
+        alignSelf: "center",
+        margin: 10
+    },
+    buttonTitle: {
+        color: "black"
+    },  
     tileTitle: {
         color: "black",
         paddingHorizontal: 15,
@@ -117,7 +133,8 @@ const style = StyleSheet.create({
     textStyle: {
         fontSize: 18,
         textAlign: "left",
-        fontWeight: "bold",
+        textAlignVertical: "center",
+        // fontWeight: "bold",
         paddingLeft: 5
     }, 
     descriptionContainer: {
@@ -125,8 +142,8 @@ const style = StyleSheet.create({
     },
     descriptionText: {
         textAlign: "center",
-        fontSize: 16,
-        margin: 7
+        fontSize: 18,
+        margin: 15
     },
     descriptionHead: {
         fontSize: 24,
