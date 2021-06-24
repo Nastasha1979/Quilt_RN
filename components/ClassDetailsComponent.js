@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { View, FlatList, ScrollView } from "react-native";
-import { Card, Text, ListItem, Button } from "react-native-elements";
+import { View, FlatList, ScrollView, StyleSheet } from "react-native";
+import { Text, ListItem, Button, Tile } from "react-native-elements";
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import Classroom from "./ClassroomComponent";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 
@@ -11,48 +13,45 @@ const mapStateToProps = state => {
 };
 
 
-function RenderClass({classStuff}){
+function RenderClass({classStuff, navigate}){
     
+
     if(classStuff){
-        const materials = ({item}) => {
-            return <ListItem><Text h5>{item}</Text></ListItem>;           
-        }
+
+        const DataTable= [
+            ["Instructor", classStuff.instructor, ],
+            ["Cost", classStuff.cost],
+            ["Level", classStuff.level],
+            ["Location", classStuff.location],
+            ["Date", classStuff.date],
+            ["Materials Provided", classStuff.materialsProvided.map(mP => {return(mP + " \n")})]
+        ];
+
+        
 
         return(
             <ScrollView>
-                <Card 
+                <Tile 
                     key={classStuff.id}
-                >
-                    <Card.Title>{classStuff.title}</Card.Title>
-                    <Card.Image source={{uri: baseUrl + classStuff.picUrl}} />   
-                </Card>
-                <View>
-                    <Text h4>
-                        Instructor: {classStuff.instructor}
-                    </Text>
-                    <Text h4>
-                        Cost: {classStuff.cost}
-                    </Text>
-                    <Text h4>
-                        Level: {classStuff.level}
-                    </Text>
-                    <Text h4>
-                        Location: {classStuff.location}
-                    </Text>
-                    <Text h4>
-                        Date: {classStuff.date}
-                    </Text>
-                    <Text h4>
-                        Materials Provided:
-                    </Text>
-                    <View>
-                        <FlatList
-                            data={classStuff.materialsProvided}
-                            renderItem={materials}
-                            keyExtractor={item => item.indexOf().toString()}
-                        /> 
-                    </View>
-                    <Text h3>
+                    imageSrc={{uri: baseUrl + classStuff.picUrl}}
+                    title={classStuff.title}
+                    featured
+                    titleStyle={style.tileTitle}
+                />  
+                <View style={style.tableContainer}>
+                    <Table style={style.outerTable} borderStyle={{borderWidth: 1, borderColor: "black"}}>
+                        <TableWrapper style={style.tableWrapper}>
+                            <Rows
+                                data={DataTable}
+                                style={style.rowData}
+                                textStyle={style.textStyle}
+                            />
+                        </TableWrapper>   
+                    </Table>
+                </View> 
+                <View style={style.descriptionContainer}>
+                    <Text style={style.descriptionHead}>What You'll Learn</Text>
+                    <Text h5 style={style.descriptionText}>
                         {classStuff.description}
                     </Text>
                 </View>
@@ -63,6 +62,7 @@ function RenderClass({classStuff}){
                 <Button
                     title="Go To Class"
                     type="solid"
+                    onPress={() => navigate("Classroom", {classId: classStuff.id })}
                 />
             </ScrollView>
         );
@@ -81,13 +81,59 @@ class ClassDetail extends Component {
     render() {
         const classId = this.props.navigation.getParam("classId");
         const classStuff = this.props.classInfo.classInfo.filter(classInfo => classInfo.id === +classId)[0];
+        const { navigate } = this.props.navigation;
         return(
             <View>
-                <RenderClass classStuff={classStuff} />
+                <RenderClass classStuff={classStuff} navigate={navigate}/>
             </View>
 
         );
     }
 }
+
+
+const style = StyleSheet.create({
+    tileTitle: {
+        color: "black",
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        backgroundColor: "#fff",
+        borderRadius: 5
+    },
+    tableContainer: {
+        flex: 1,
+        padding: 16
+    },
+    outerContainer: {
+        borderWidth: 2,
+        borderColor: "#c8e1ff"
+    },
+    tableWrapper: {
+
+    },
+    rowData: {
+        justifyContent: "center"
+    },
+    textStyle: {
+        fontSize: 18,
+        textAlign: "left",
+        fontWeight: "bold",
+        paddingLeft: 5
+    }, 
+    descriptionContainer: {
+        
+    },
+    descriptionText: {
+        textAlign: "center",
+        fontSize: 16,
+        margin: 7
+    },
+    descriptionHead: {
+        fontSize: 24,
+        fontWeight: "bold",
+        margin: 5
+    }
+
+})
 
 export default connect(mapStateToProps)(ClassDetail);

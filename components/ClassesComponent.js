@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
-import { Card, Button } from "react-native-elements";
-import { FlatList } from "react-native";
-import { ListItem } from "react-native-elements";
+import { View, Text, FlatList, StyleSheet } from "react-native";
+import { Card, Button, ListItem, Image } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 
@@ -24,17 +22,25 @@ class Classes extends Component {
         const renderClassItem = ({item}) => {
             console.log(item);
             return(
-                <ListItem style={{flex: 1}}>
-                    <Card style={{alignSelf: "stretch"}}>
-                        <Card.Image source={{uri: baseUrl + item.pic}} />
-                        <Card.Title>{item.title}</Card.Title>
-                        <Text style={{marginBottom: 10}}>
+                <ListItem style={style.listItem}>
+                    <Card >
+                        <Image 
+                            source={{uri: baseUrl + item.pic}} 
+                            style={style.image}    
+                        />
+                        <Card.Title style={style.title}>{item.title}</Card.Title>
+                        <Text style={style.description}>
                             {item.description}
                         </Text>
                         <Button
                             title="Learn More"
-                            type="outline"
-                            onPress={() => navigate("ClassDetail", { classId: item.id })}
+                            type="solid"
+                            raised
+                            buttonStyle={style.buttonContainer}
+                            titleStyle={style.buttonTitleStyle}
+                            onPress={() => navigate("ClassDetail", { 
+                                classId: item.id 
+                            })}
                         />
                     </Card>
                 </ListItem>
@@ -42,7 +48,7 @@ class Classes extends Component {
         };
 
         return(
-            <View>
+            <View style={style.container}>
                 <Text style={{textAlign: "center", fontSize: 22, paddingTop: 10, fontWeight: "bold"}}>Available Classes</Text>
                 <FlatList
                     data={this.props.classesData.classesData}
@@ -54,5 +60,35 @@ class Classes extends Component {
         );
     }
 }
+
+
+const style = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    title: {
+        fontSize: 18,
+        marginTop: 10
+    },
+    description: {
+        marginBottom: 10,
+        textAlign: "center",
+        fontSize: 16
+    },
+    listItem: {
+        flex: 1,
+        alignSelf: "stretch"
+    },
+    image: {
+        width: 300,
+        height: 175
+    },
+    buttonContainer: {
+        backgroundColor: "#faeddd"
+    },
+    buttonTitleStyle: {
+        color: "black"
+    }
+})
 
 export default connect(mapStateToProps)(Classes);

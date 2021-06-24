@@ -7,6 +7,7 @@ import Inspiration from "./InspirationComponent";
 import Newsletter from "./NewsletterComponent";
 import About from "./AboutComponent";
 import ClassDetail from "./ClassDetailsComponent";
+import Classroom from "./ClassroomComponent";
 import Constants from "expo-constants";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
@@ -90,7 +91,8 @@ const ArticlesNavigator = createStackNavigator (
 const ClassesNavigator = createStackNavigator (
     {
         Classes: { screen: Classes },
-        ClassDetail: { screen: ClassDetail }    
+        ClassDetail: { screen: ClassDetail }, 
+        Classroom: { screen: Classroom }   
     },
     {
         initialRouteName: "Classes",
