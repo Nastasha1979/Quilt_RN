@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, ScrollView, StyleSheet } from "react-native";
-import { Text } from "react-native-elements";
+import { Text, ListItem } from "react-native-elements";
 import YoutubePlayer from 'react-native-youtube-iframe';
+import { FlatList } from "react-native-gesture-handler";
 
 const mapStateToProps = state => {
     return{
-        classInfo: state.classInfo
+        classInfo: state.classInfo,
+        comments: state.comments
     };
 };
 
@@ -18,7 +20,7 @@ function RenderVideo({classStuff}) {
             </View>
             <View>
                 <YoutubePlayer
-                    height={500}
+                    height={300}
                     play={false}
                     videoId={classStuff.youtube}
                 />
@@ -26,6 +28,27 @@ function RenderVideo({classStuff}) {
         </ScrollView>
 
 
+    );
+}
+
+function RenderComments({comments}){
+    const commentList = comments.map(comment => {
+        return(
+            <ListItem key={comment.id}>
+                <ListItem.Content>
+                    <ListItem.Title>{comment.header}</ListItem.Title>
+                    <ListItem.Subtitle>{comment.body}</ListItem.Subtitle>
+                </ListItem.Content>
+            </ListItem>
+        );
+    });
+        
+
+    return(
+        <View>
+            <Text h4>Comments</Text>
+            {commentList}
+        </View>
     );
 }
 
@@ -48,9 +71,12 @@ class Classroom extends Component {
     render(props) {
         const classId = this.props.navigation.getParam("classId");
         const classStuff = this.props.classInfo.classInfo.filter(classInfo => classInfo.id === +classId)[0];
+        const comments = this.props.comments.comments.filter(comment => comment.classId === +classId);
         return(
             <View>
                 <RenderVideo classStuff={classStuff} />
+                <RenderComments comments={comments} />
+                
             </View>
         );
     }
