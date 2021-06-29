@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { Tile } from "react-native-elements";
+import { Tile, Button } from "react-native-elements";
 
 class Home extends Component {
 
 
     render() {
+        const {navigate} = this.props.navigation;
         return(
             
                 <View style={style.container}>
@@ -19,8 +20,15 @@ class Home extends Component {
                         imageContainerStyle={style.imgStyle}
                         titleStyle={style.titleStyle}
                         captionStyle={style.captionStyle}
-                    />                    
-                    <Text style={style.bottomText}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
+                    />                
+                    <Button
+                    title="Sign In"
+                    type="solid"
+                    color="red"
+                    onPress={() => navigate("SignIn")} 
+                    buttonStyle={style.button}
+                    containerStyle={style.buttonContainer}
+                    />
                 </View>
                 
             
@@ -53,10 +61,15 @@ const style = StyleSheet.create({
     captionStyle: {
         fontSize: 16
     },
-    bottomText: {
-        textAlign: "center",
-        paddingTop: 200,
-        fontSize: 22
+    button: {
+        marginTop: 200,
+        fontSize: 22,
+        width: "50%",
+        backgroundColor: "red",
+    },
+    buttonContainer: {
+        alignItems: "center",
+        justifyContent: "center"
     }
 
 })

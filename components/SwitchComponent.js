@@ -11,6 +11,7 @@ import Classroom from "./ClassroomComponent";
 import InspireDetail from "./InspireDetailComponent";
 import ArticleDetail from "./ArticleDetailComponent";
 import Favorites from "./FavoritesComponent";
+import SignIn from "./SignInComponent";
 import Constants from "expo-constants";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
@@ -26,6 +27,23 @@ const mapDispatchToProps = {
     fetchArticles, 
     fetchCarousel
 };
+
+
+const SignInNavigator = createStackNavigator (
+    {
+        SignIn: { screen: SignIn }
+    },
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: "#faeddd"
+            },
+            headerTitleStyle: {
+                color: "#000000"
+            }
+        }
+    }
+);
 
 const FavoritesNavigator = createStackNavigator (
     {
@@ -154,8 +172,10 @@ const SwitchNavigator = createDrawerNavigator(
         Inspiration: { screen: InspirationNavigator },
         Articles: { screen: ArticlesNavigator },
         Newsletter: { screen: NewsletterNavigator },
-        "About Us": { screen: AboutNavigator },
-        Favorites: { screen: FavoritesNavigator }
+        Favorites: { screen: FavoritesNavigator },
+        About: { screen: AboutNavigator },
+        "Sign In": { screen: SignInNavigator }
+        
     },
     {
         drawerBackgroundColor: "#fff",    

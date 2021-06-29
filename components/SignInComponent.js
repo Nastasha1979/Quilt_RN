@@ -3,31 +3,35 @@ import { View, StyleSheet } from "react-native";
 import { Text, Input, Button } from "react-native-elements";
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
-class Newsletter extends Component {
+class SignIn extends Component {
     
+    static navigationOptions = {
+        title: "Sign In"
+    }
 
     render() {
         return(
             <View style={style.container}>
-                <Text h2 style={style.h2Text}>Newsletter</Text>
-                <Text h5 style={style.h5Text}>Get free tips, tricks, and patterns. Its Free!</Text>
+                <Text h2 style={style.h2Text}>Sign In</Text>
+                <Text h5 style={style.h5Text}>Save all of your favorite classes, articles, and more!</Text>
                 <Input
-                    placeholder='First Name'
+                    placeholder='User Name'
                     leftIcon={
                         <AntDesign name="user" size={24} color="black" />
                     }
                 />
                 <Input
-                    placeholder='Email'
+                    placeholder='Password'
                     leftIcon={
-                        <Entypo name="email" size={24} color="black" />
+                        <MaterialCommunityIcons name="form-textbox-password" size={24} color="black" />
                     }
                     inputContainerStyle={style.emailContainer}
                 />
                 <Button
-                    title="Sign Up"
+                    title="Sign In"
                     raised
                     buttonStyle={style.buttonStyle}
                     containerStyle={style.btnContainer}
@@ -73,4 +77,4 @@ const style = StyleSheet.create({
     
 });
 
-export default Newsletter;
+export default SignIn;
