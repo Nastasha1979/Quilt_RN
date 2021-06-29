@@ -33,7 +33,7 @@ class Articles extends Component {
         const RenderArticles = ({item}) => {
             return(
                 <ListItem
-                    onPress={() => navigate("ArticleDetail", {articleId: item.id})}
+                    onPress={() => navigate("ArticleDetail", {articleId: item.key})}
                 >   
                     <ListItem.Content>
                         <ListItem.Title>{item.title}</ListItem.Title>

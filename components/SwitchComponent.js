@@ -10,6 +10,7 @@ import ClassDetail from "./ClassDetailsComponent";
 import Classroom from "./ClassroomComponent";
 import InspireDetail from "./InspireDetailComponent";
 import ArticleDetail from "./ArticleDetailComponent";
+import Favorites from "./FavoritesComponent";
 import Constants from "expo-constants";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
@@ -25,6 +26,22 @@ const mapDispatchToProps = {
     fetchArticles, 
     fetchCarousel
 };
+
+const FavoritesNavigator = createStackNavigator (
+    {
+        Favorites: { screen: Favorites }
+    },
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: "#faeddd"
+            },
+            headerTitleStyle: {
+                color: "#000000"
+            }
+        }
+    }
+);
 
 const AboutNavigator = createStackNavigator (
     {
@@ -135,9 +152,10 @@ const SwitchNavigator = createDrawerNavigator(
         Home: { screen: HomeNavigator },
         Classes: { screen: ClassesNavigator},
         Inspiration: { screen: InspirationNavigator },
-        Articles: { screen: ArticlesNavigator},
+        Articles: { screen: ArticlesNavigator },
         Newsletter: { screen: NewsletterNavigator },
-        "About Us": { screen: AboutNavigator }
+        "About Us": { screen: AboutNavigator },
+        Favorites: { screen: FavoritesNavigator }
     },
     {
         drawerBackgroundColor: "#fff",    

@@ -1,17 +1,23 @@
 import React from 'react';
 import Switch from "./components/SwitchComponent";
+import { LogBox } from "react-native";
+import { PersistGate } from "redux-persist/es/integration/react";
 import { Provider } from "react-redux";
 import { ConfigureStore } from "./redux/ConfigureStore";
-console.disableYellowBox = true;
 
-const store = ConfigureStore();
+const {persistor, store } = ConfigureStore();
 
 export default function App() {
   return (
     <Provider store={store}>
-      <Switch />
+      <PersistGate
+        persistor={persistor}
+      >
+        <Switch />
+      </PersistGate>
     </Provider>
   );
 }
 
-
+LogBox.ignoreLogs(["It appears that you"]);
+LogBox.ignoreLogs(["interpolate() was renamed"]);

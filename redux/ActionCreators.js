@@ -202,13 +202,34 @@ export const addCarousel = carousel => ({
 
 
 
-export const postFavorite = classInfoId => dispatch => {
+export const postFavoriteClass = classInfoId => dispatch => {
     setTimeout(() => {
-        dispatch(addFavorite(classInfoId));
+        dispatch(addFavoriteClass(classInfoId));
     }, 1000);
 };
 
-export const addFavorite = classInfoId => ({
-    type: ActionTypes.ADD_FAVORITE,
+export const addFavoriteClass = classInfoId => ({
+    type: ActionTypes.ADD_FAVORITE_CLASS,
     payload: classInfoId
+});
+
+export const deleteFavoriteClass = classInfoId => ({
+    type: ActionTypes.DELETE_FAVORITE_CLASS,
+    payload: classInfoId
+});
+
+export const postFavoriteArticle = articleId => dispatch => {
+    setTimeout(() => {
+        dispatch(addFavoriteArticle(articleId));
+    }, 1000);
+};
+
+export const addFavoriteArticle = articleId => ({
+    type: ActionTypes.ADD_FAVORITE_ARTICLE,
+    payload: articleId
+});
+
+export const deleteFavoriteArticle = articleId => ({
+    type: ActionTypes.DELETE_FAVORITE_ARTICLE,
+    payload: articleId
 });

@@ -1,18 +1,27 @@
 import React, { Component, useState } from "react";
 import { View, FlatList, ScrollView, StyleSheet } from "react-native";
-import { Text, ListItem, Button, Tile } from "react-native-elements";
+import { Text, ListItem, Button, Tile, Icon } from "react-native-elements";
+import { postFavoriteClass } from "../redux/ActionCreators";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 
 const mapStateToProps = state => {
     return{
-        classInfo: state.classInfo
+        classInfo: state.classInfo,
+        favoritesClass: state.favoritesClass
     };
 };
 
+const mapDispatchToProps = {
+    postFavoriteClass: classInfoId => (postFavoriteClass(classInfoId))
+}
 
-function RenderClass({classStuff, navigate}){
+
+
+function RenderClass(props){
+
+    const { classStuff } = props;
     const [button, toggleButton] = useState(false);
 
 
@@ -37,7 +46,16 @@ function RenderClass({classStuff, navigate}){
                     title={classStuff.title}
                     featured
                     titleStyle={style.tileTitle}
-                />  
+                />
+                <View> 
+                    <Icon
+                        name={props.favorite ? "heart-o": "heart"}
+                        type="font-awesome"
+                        raised
+                        reversed
+                        onPress={() => props.favorite ? console.log("Already Set as a favorite") : props.markFavorite()}
+                    /> 
+                </View>
                 <View style={style.tableContainer}>
                     <Table style={style.outerTable} borderStyle={{borderWidth: 1, borderColor: "black"}}>
                         <TableWrapper style={style.tableWrapper}>
@@ -86,6 +104,9 @@ class ClassDetail extends Component {
         title: "Class Detail"
     }
 
+    markFavorite(classInfoId) {
+        this.props.postFavoriteClass(classInfoId);
+    }
 
     render() {
         const classId = this.props.navigation.getParam("classId");
@@ -93,7 +114,12 @@ class ClassDetail extends Component {
         const { navigate } = this.props.navigation;
         return(
             <View style={style.wholeView}>
-                <RenderClass classStuff={classStuff} navigate={navigate}/>
+                <RenderClass 
+                    classStuff={classStuff} 
+                    navigate={navigate} 
+                    markFavorite={() => this.markFavorite(classId)} 
+                    favorite={this.props.favoritesClass.includes(classId)}
+                />
             </View>
 
         );
@@ -159,4 +185,4 @@ const style = StyleSheet.create({
 
 })
 
-export default connect(mapStateToProps)(ClassDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(ClassDetail);
