@@ -15,6 +15,8 @@ export const comments = (state = { isLoading: false, errMess: null, comments: []
         case ActionTypes.ADD_NEW_COMMENT:
             const comment = action.payload;
             comment.id = state.comments.length;
+            comment.avatar = "assets/genericUser.png";
+            comment.author = "generic";
             return{...state, comments: state.comments.concat(comment)};
 
         default:

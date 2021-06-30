@@ -4,7 +4,7 @@ import { View, ScrollView, StyleSheet} from "react-native";
 import { Text, ListItem, Input, Button, Icon, Avatar } from "react-native-elements";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {baseUrl} from "../shared/baseUrl";
-import { postComment } from "../redux/ActionCreators";
+import { classesFailed, postComment } from "../redux/ActionCreators";
 
 const mapStateToProps = state => {
     return{
@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    postComment: (classInfoId, heading, body) => (postComment(classInfoId, heading, body))
+    postComment: (classId, header, body) => (postComment(classId, header, body))
 }
 
 function RenderVideo({classStuff}) {
@@ -72,7 +72,7 @@ class Classroom extends Component {
         super(props);
         this.state = {
             playing:  false,
-            heading: "",
+            header: "",
             body: ""
         }
     }
@@ -81,25 +81,25 @@ class Classroom extends Component {
         this.setState({playing: !this.state.playing});
     }
 
-    handleComment(classInfoId) {
-        this.props.postComment(classInfoId, this.state.heading, this.state.body);
-        console.log(classInfoId, this.state.heading, this.state.body);
+    handleComment(classId) {
+        this.props.postComment(classId, this.state.header, this.state.body);
+        console.log(classId, this.state.header, this.state.body);
     }
 
     resetForm() {
         this.setState({
-            heading: "",
+            header: "",
             body: ""
         });
     }
 
-    newComment = ({classInfoId}) => {
+    newComment = (classId) => {
         return(
             <View style={style.inputView}>
                 <Input
                     placeholder='Your Comment Title'
-                    onChangeText={value => this.setState({heading: value})}
-                    value={this.state.heading}
+                    onChangeText={value => this.setState({header: value})}
+                    value={this.state.header}
                 />
                 <Input
                     placeholder="Your Comment"
@@ -119,7 +119,7 @@ class Classroom extends Component {
                     title="Post Comment"
                     type="clear"
                     onPress={() => {
-                        this.handleComment({classInfoId})
+                        this.handleComment(classId)
                         this.resetForm()
                     }}
                 />
@@ -139,7 +139,7 @@ class Classroom extends Component {
             <ScrollView>
                 <RenderVideo classStuff={classStuff} />
                 <RenderComments comments={comments} />
-                <View>{this.newComment(classStuff.id)}</View>
+                <View>{this.newComment(classId)}</View>
             </ScrollView>
         );
     }

@@ -235,10 +235,10 @@ export const deleteFavoriteArticle = articleId => ({
 });
 
 
-export const postComment = (classInfoId, heading, body) => dispatch => {
+export const postComment = (classId, header, body) => dispatch => {
     const newComment = {
-        classInfoId,
-        heading,
+        classId,
+        header,
         body,
         date: new Date().toISOString()
     };
