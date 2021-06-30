@@ -1,6 +1,6 @@
-import React, { Component, useState } from "react";
-import { View, FlatList, ScrollView, StyleSheet } from "react-native";
-import { Text, ListItem, Button, Tile, Icon } from "react-native-elements";
+import React, { Component } from "react";
+import { View, ScrollView, StyleSheet, Modal, Switch  } from "react-native";
+import { Text, Button, Tile, Icon } from "react-native-elements";
 import { postFavoriteClass } from "../redux/ActionCreators";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import { connect } from "react-redux";
@@ -22,7 +22,6 @@ const mapDispatchToProps = {
 function RenderClass(props){
 
     const { classStuff } = props;
-    const [button, toggleButton] = useState(false);
 
 
     if(classStuff){
@@ -73,22 +72,23 @@ function RenderClass(props){
                         {classStuff.description}
                     </Text>
                 </View>
-                {!button &&
+                {!props.signUp &&
                     <Button
                         title="Sign Up"
                         type="solid"
                         buttonStyle={style.button}
                         titleStyle={style.buttonTitle}
-                        onPress={() => toggleButton(!button)}
+                        onPress={() => {props.onShowModal()}
+                        }
                     />
                 }
-                {button && 
+                {props.signUp && 
                     <Button
                         title="Go To Class"
                         type="solid"
                         buttonStyle={style.button}
                         titleStyle={style.buttonTitle}
-                        onPress={() => navigate("Classroom", {classId: classStuff.id })}
+                        onPress={() => props.navigate("Classroom", {classId: classStuff.id })}
                     />
                 }
             </ScrollView>
@@ -99,6 +99,23 @@ function RenderClass(props){
 }
 
 class ClassDetail extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showModal: false,
+            signUp: false,
+            isEnabled: false
+        }
+    }
+
+    toggleModal() {
+        this.setState({showModal: !this.state.showModal});
+    }
+    
+    toggleSignUp() {
+        this.setState({signUp: !this.state.signUp})
+    }
+
 
     static navigationOptions = {
         title: "Class Detail"
@@ -112,6 +129,7 @@ class ClassDetail extends Component {
         const classId = this.props.navigation.getParam("classId");
         const classStuff = this.props.classInfo.classInfo.filter(classInfo => classInfo.id === +classId)[0];
         const { navigate } = this.props.navigation;
+        const toggleSwitch = () => {this.setState({isEnabled: !this.state.isEnabled});}
         return(
             <View style={style.wholeView}>
                 <RenderClass 
@@ -119,7 +137,45 @@ class ClassDetail extends Component {
                     navigate={navigate} 
                     markFavorite={() => this.markFavorite(classId)} 
                     favorite={this.props.favoritesClass.includes(classId)}
+                    onShowModal={() => this.toggleModal()}
+                    signUp={this.state.signUp}
                 />
+
+                <Modal
+                    transparent={false}
+                    animationType={"fade"}
+                    visible={this.state.showModal}
+                    onRequestClose={() => this.toggleModal()}
+                    style={style.modal} 
+                >
+                    <View><Text h4>{`Sign up for ${classStuff.title}`}</Text></View>
+                   <View style={style.modal}>
+                       <Text style={style.modalTitle}>Sign Up?</Text>
+                        <Switch 
+                           trackColor={{false: "red", true: "green"}}
+                           onValueChange={() => {
+                                toggleSwitch
+                                this.toggleSignUp()
+                            }}
+                            value={this.state.signUp}
+                            style={style.switch}
+                        />
+                   </View>
+                   <View style={style.modalButtons}>
+                       <Button
+                            title="Cancel"
+                            type="outline"
+                            color="gray"
+                            onPress={() => this.toggleModal()}
+                        />
+                        <Button
+                            title="Submit"
+                            type="solid"
+                            color="blue"
+                            onPress={() => this.toggleModal()}
+                        />
+                   </View>
+                </Modal>
             </View>
 
         );
@@ -181,6 +237,27 @@ const style = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
         margin: 5
+    },
+    modal: {
+        margin: 10,
+        flexDirection: "row"
+    },
+    modalTitle: {
+        fontSize: 18,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    modalButtons: {
+        flexDirection: "row",
+        width: "30%",
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        marginTop: 25
+    },
+    switch: {
+        transform: [{scaleX: 1.0}, {scaleY: 1.3}],
+        paddingLeft: 50
     }
 
 })

@@ -233,3 +233,22 @@ export const deleteFavoriteArticle = articleId => ({
     type: ActionTypes.DELETE_FAVORITE_ARTICLE,
     payload: articleId
 });
+
+
+export const postComment = (classInfoId, heading, body) => dispatch => {
+    const newComment = {
+        classInfoId,
+        heading,
+        body,
+        date: new Date().toISOString()
+    };
+
+    setTimeout(() => {
+        dispatch(addComment(newComment));
+    }, 1000);
+};
+
+export const addComment = comment => ({
+    type: ActionTypes.ADD_NEW_COMMENT,
+    payload: comment
+});
