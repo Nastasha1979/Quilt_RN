@@ -8,6 +8,7 @@ import { classInfo } from "./classInfo";
 import { articles } from "./articles";
 import { carousel } from "./carousel";
 import { comments } from "./comments";
+import { classList } from "./classList";
 import { favoritesClass } from "./favoritesClass";
 import { favoritesArticle } from "./favoritesArticle";
 
@@ -27,7 +28,8 @@ export const ConfigureStore = () => {
             carousel,
             comments,
             favoritesClass,
-            favoritesArticle
+            favoritesArticle,
+            classList
         }),
         applyMiddleware(thunk, logger)
     );

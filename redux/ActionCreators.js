@@ -272,3 +272,57 @@ export const addComment = comment => ({
     type: ActionTypes.ADD_NEW_COMMENT,
     payload: comment
 });
+
+
+export const postSignUp = (course, name, signUp, isEnabled) => dispatch => {
+    const newSignUp = {
+        signUp,
+        course,
+        name,
+        isEnabled: isEnabled,
+        date: new Date().toISOString()
+    };
+
+    return fetch(baseUrl + "classList", {
+        method: "POST",
+        body: JSON.stringify(newSignUp),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            const error = new Error(`Error ${response.status}: ${response.statusText}`);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => { throw error; }
+    )
+    .then(response => response.json())
+    .then(response => dispatch(addSignUp(response)))
+    .catch(error => {
+        console.log("post Sign Up", error.message);
+    });
+};
+
+
+export const addSignUp = newSignUp => ({
+    type: ActionTypes.POST_SIGN_UP,
+    payload: newSignUp
+});
+
+export const postCourseDelete = (name, course) => dispatch => {
+    const newDeletion = {
+        name,
+        course
+    };
+    dispatch(deleteSignUp(newDeletion));
+}
+
+export const deleteSignUp = newDeletion => ({
+    type: ActionTypes.DELETE_SIGN_UP,
+    payload: newDeletion
+});

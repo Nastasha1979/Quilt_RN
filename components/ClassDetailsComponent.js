@@ -1,20 +1,23 @@
 import React, { Component } from "react";
-import { View, ScrollView, StyleSheet, Modal, Switch  } from "react-native";
-import { Text, Button, Tile, Icon } from "react-native-elements";
+import { View, ScrollView, StyleSheet, Modal, Switch } from "react-native";
+import { Text, Button, Tile, Icon, Input } from "react-native-elements";
 import { postFavoriteClass } from "../redux/ActionCreators";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import { postSignUp } from "../redux/ActionCreators";
 
 const mapStateToProps = state => {
     return{
         classInfo: state.classInfo,
-        favoritesClass: state.favoritesClass
+        favoritesClass: state.favoritesClass,
+        classList: state.classList
     };
 };
 
 const mapDispatchToProps = {
-    postFavoriteClass: classInfoId => (postFavoriteClass(classInfoId))
+    postFavoriteClass: classInfoId => (postFavoriteClass(classInfoId)),
+    postSignUp: (course, name, signUp, isEnabled) => (postSignUp(course, name, signUp, isEnabled))
 }
 
 
@@ -78,18 +81,26 @@ function RenderClass(props){
                         type="solid"
                         buttonStyle={style.button}
                         titleStyle={style.buttonTitle}
-                        onPress={() => {props.onShowModal()}
-                        }
+                        onPress={() => {props.onShowModal()}}
                     />
                 }
-                {props.signUp && 
-                    <Button
-                        title="Go To Class"
-                        type="solid"
-                        buttonStyle={style.button}
-                        titleStyle={style.buttonTitle}
-                        onPress={() => props.navigate("Classroom", {classId: classStuff.id })}
-                    />
+                {props.signUp &&
+                    <View style={style.buttonView}>
+                        <Button
+                            title="Go To Class"
+                            type="solid"
+                            buttonStyle={style.button}
+                            titleStyle={style.buttonTitle}
+                            onPress={() => props.navigate("Classroom", {classId: classStuff.id })}
+                        />
+                        <Button
+                            title="Unenroll"
+                            type="solid"
+                            buttonStyle={style.button}
+                            titleStyle={style.buttonTitle}
+                            onPress={() => props.onUnenroll()}
+                        />
+                    </View> 
                 }
             </ScrollView>
         );
@@ -104,6 +115,7 @@ class ClassDetail extends Component {
         this.state = {
             showModal: false,
             signUp: false,
+            name: "",
             isEnabled: false
         }
     }
@@ -125,6 +137,14 @@ class ClassDetail extends Component {
         this.props.postFavoriteClass(classInfoId);
     }
 
+    courseSignUp(course) {
+        if(this.state.signUp === true){
+            this.props.postSignUp(course, this.state.name, this.state.signUp, this.state.isEnabled);
+        } else {
+            console.log("The user didnt' sign up for the course.");
+        }
+    }
+
     render() {
         const classId = this.props.navigation.getParam("classId");
         const classStuff = this.props.classInfo.classInfo.filter(classInfo => classInfo.id === +classId)[0];
@@ -139,6 +159,7 @@ class ClassDetail extends Component {
                     favorite={this.props.favoritesClass.includes(classId)}
                     onShowModal={() => this.toggleModal()}
                     signUp={this.state.signUp}
+                    onUnenroll={() => this.toggleSignUp()}
                 />
 
                 <Modal
@@ -149,8 +170,22 @@ class ClassDetail extends Component {
                     style={style.modal} 
                 >
                     <View><Text h4>{`Sign up for ${classStuff.title}`}</Text></View>
+                    <View>
+                    <Input
+                            placeholder="User Name"
+                            leftIcon={
+                                <Icon   
+                                    name="user-o"
+                                    type="font-awesome"
+                                />
+                            } 
+                            onChangeText={value => this.setState({name: value})}
+                            value={this.state.name}
+                       />
+                    </View>
                    <View style={style.modal}>
                        <Text style={style.modalTitle}>Sign Up?</Text>
+                       
                         <Switch 
                            trackColor={{false: "red", true: "green"}}
                            onValueChange={() => {
@@ -172,7 +207,11 @@ class ClassDetail extends Component {
                             title="Submit"
                             type="solid"
                             color="blue"
-                            onPress={() => this.toggleModal()}
+                            onPress={() => {
+                                this.courseSignUp(classStuff.title)
+                                this.toggleModal()
+                            
+                            }}
                         />
                    </View>
                 </Modal>
@@ -186,6 +225,11 @@ class ClassDetail extends Component {
 const style = StyleSheet.create({
     wholeView: {
         flex: 1
+    },
+    buttonView: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignSelf: "center"
     },
     button: {
         backgroundColor: "#faeddd",
