@@ -1,5 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
+import { classList } from "./classList";
 
 export const fetchClasses = () => dispatch => {
 
@@ -314,13 +315,34 @@ export const addSignUp = newSignUp => ({
     payload: newSignUp
 });
 
-export const postCourseDelete = (name, course) => dispatch => {
-    const newDeletion = {
-        name,
-        course
-    };
-    dispatch(deleteSignUp(newDeletion));
-}
+
+
+export const removeSignUp = (id) => dispatch => {
+
+    return fetch(baseUrl + "classList", + id, {
+        method: "DELETE",
+        body: JSON.stringify(id),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            const error = new Error(`Error ${response.status}: ${response.statusText}`);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => { throw error; }
+    )
+    .then(response => response.json())
+    .then(response => console.log("success", response))
+    .catch(error => {
+        console.log("delete Sign Up", error.message);
+    });
+};
 
 export const deleteSignUp = newDeletion => ({
     type: ActionTypes.DELETE_SIGN_UP,
