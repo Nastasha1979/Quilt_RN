@@ -5,7 +5,7 @@ import { postFavoriteClass } from "../redux/ActionCreators";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
-import { postSignUp, removeSignUp } from "../redux/ActionCreators";
+import { postSignUp } from "../redux/ActionCreators";
 
 const mapStateToProps = state => {
     return{
@@ -18,7 +18,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     postFavoriteClass: classInfoId => (postFavoriteClass(classInfoId)),
     postSignUp: (course, name, signUp, isEnabled) => (postSignUp(course, name, signUp, isEnabled)),
-    removeSignUp: (madeUpID) => (removeSignUp(madeUpID))
 }
 
 
@@ -99,7 +98,7 @@ function RenderClass(props){
                             type="solid"
                             buttonStyle={style.button}
                             titleStyle={style.buttonTitle}
-                            onPress={() => props.onUnenroll(32)}
+                            onPress={() => props.onUnenroll()}
                         />
                     </View> 
                 }
@@ -129,10 +128,7 @@ class ClassDetail extends Component {
         this.setState({signUp: !this.state.signUp});   
     }
 
-    unEnroll(madeUpID) {
-        this.toggleSignUp();
-        this.props.removeSignUp(madeUpID);
-    }
+
     static navigationOptions = {
         title: "Class Detail"
     }
@@ -163,7 +159,7 @@ class ClassDetail extends Component {
                     favorite={this.props.favoritesClass.includes(classId)}
                     onShowModal={() => this.toggleModal()}
                     signUp={this.state.signUp}
-                    onUnenroll={() => this.unEnroll()}
+                    onUnenroll={() => this.toggleSignUp()}
                 />
 
                 <Modal

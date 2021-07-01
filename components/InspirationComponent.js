@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 import { View, Text, ScrollView, FlatList } from "react-native";
 import { Tile, ListItem } from "react-native-elements";
 
+
 const mapStateToProps = state => {
     return{
-        carousel: state.carousel
+        carousel: state.carousel,
     };
 };
 

@@ -1,6 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
-import { classList } from "./classList";
+
 
 export const fetchClasses = () => dispatch => {
 
@@ -203,6 +203,49 @@ export const addCarousel = carousel => ({
 
 
 
+export const fetchCarouselImages = () => dispatch => {
+
+    dispatch(carouselImagesLoading());
+
+    return fetch(baseUrl + 'carouselImages')
+    .then(response => {
+        if(response.ok) {
+            console.log("In Fetch Carousel Images. response OK");
+            return response;
+        } else {
+            const error = new Error(`Error ${response.status}: ${response.statusText}`);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        const errMess = new Error(error.message);
+        throw errMess;
+    })
+    .then(response => response.json())
+    .then(response => dispatch(addCarouselImages(response)))
+    .catch(error => console.log("fetch Carousel Images ", error.message));
+};
+
+
+export const addCarouselImages = carouselImages => ({
+    type: ActionTypes.ADD_CAROUSEL_IMAGES,
+    payload: carouselImages
+});
+
+export const carouselImagesLoading = () => ({
+    type: ActionTypes.CAROUSEL_IMAGES_LOADING
+});
+
+export const carouselImagesFailed = errMess => ({
+    type: ActionTypes.CAROUSEL_IMAGES_FAILED,
+    payload: errMess
+});
+
+
+
+
+
 export const postFavoriteClass = classInfoId => dispatch => {
     setTimeout(() => {
         dispatch(addFavoriteClass(classInfoId));
@@ -317,34 +360,3 @@ export const addSignUp = newSignUp => ({
 
 
 
-export const removeSignUp = (id) => dispatch => {
-
-    return fetch(baseUrl + "classList", + id, {
-        method: "DELETE",
-        body: JSON.stringify(id),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            const error = new Error(`Error ${response.status}: ${response.statusText}`);
-            error.response = response;
-            throw error;
-        }
-    },
-    error => { throw error; }
-    )
-    .then(response => response.json())
-    .then(response => console.log("success", response))
-    .catch(error => {
-        console.log("delete Sign Up", error.message);
-    });
-};
-
-export const deleteSignUp = newDeletion => ({
-    type: ActionTypes.DELETE_SIGN_UP,
-    payload: newDeletion
-});
