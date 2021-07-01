@@ -7,21 +7,41 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 class SignIn extends Component {
-    
-    static navigationOptions = {
-        title: "Sign In"
+    constructor(props){
+        super(props);
+        this.state = {
+            username: "",
+            password: ""
+        }
     }
+
+    handleSignIn() {
+        console.log(JSON.stringify(this.state));
+        this.resetForm();
+    }
+
+    resetForm() {
+        this.setState({
+            username: "",
+            password: ""
+        });
+    }
+
+    
 
     render() {
         return(
             <View style={style.container}>
                 <Text h2 style={style.h2Text}>Sign In</Text>
-                <Text h5 style={style.h5Text}>Save all of your favorite classes, articles, and more!</Text>
+                <Text h4 style={style.h4Text}>Save all of your favorite classes, articles, and more!</Text>
                 <Input
                     placeholder='User Name'
                     leftIcon={
                         <AntDesign name="user" size={24} color="black" />
                     }
+                    inputContainerStyle={style.emailContainer}
+                    onChangeText={value => this.setState({username: value})}
+                    value={this.state.username}
                 />
                 <Input
                     placeholder='Password'
@@ -29,12 +49,16 @@ class SignIn extends Component {
                         <MaterialCommunityIcons name="form-textbox-password" size={24} color="black" />
                     }
                     inputContainerStyle={style.emailContainer}
+                    onChangeText={value => this.setState({password: value})}
+                    value={this.state.password}
+                    secureTextEntry={true}
                 />
                 <Button
                     title="Sign In"
                     raised
                     buttonStyle={style.buttonStyle}
                     containerStyle={style.btnContainer}
+                    onPress={() => this.handleSignIn()}
                 />
 
             </View>
@@ -54,14 +78,14 @@ const style = StyleSheet.create({
         marginBottom: 20
        
     },
-    h5Text: {
+    h4Text: {
         textAlign: "center",
-        marginBottom: 20
-        
+        marginBottom: 50,
+        fontWeight: "bold",
+        width: 250
     },
     emailContainer: {
-        marginTop: 20,
-        marginBottom: 20
+        margin: 20 
     },
     buttonStyle: {
         backgroundColor: "red",

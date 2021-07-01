@@ -35,12 +35,7 @@ const SignInNavigator = createStackNavigator (
     },
     {
         defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: "#faeddd"
-            },
-            headerTitleStyle: {
-                color: "#000000"
-            }
+            headerShown: false
         }
     }
 );
@@ -55,7 +50,9 @@ const FavoritesNavigator = createStackNavigator (
                 backgroundColor: "#faeddd"
             },
             headerTitleStyle: {
-                color: "#000000"
+                color: "#000000",
+                fontWeight: "bold",
+                paddingLeft: 125
             }
         }
     }
@@ -71,7 +68,9 @@ const AboutNavigator = createStackNavigator (
                 backgroundColor: "#faeddd"
             },
             headerTitleStyle: {
-                color: "#000000"
+                color: "#000000",
+                fontWeight: "bold",
+                paddingLeft: 125
             }
         }
     }
@@ -83,12 +82,7 @@ const NewsletterNavigator = createStackNavigator (
     },
     {
         defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: "#faeddd"
-            },
-            headerTitleStyle: {
-                color: "#000000"
-            }
+            headerShown: false
         }
     }
 );
@@ -105,7 +99,9 @@ const InspirationNavigator = createStackNavigator (
                 backgroundColor: "#faeddd"
             },
             headerTitleStyle: {
-                color: "#000000"
+                color: "#000000",
+                fontWeight: "bold",
+                paddingLeft: 125
             }
         }
     }
@@ -123,7 +119,9 @@ const ArticlesNavigator = createStackNavigator (
                 backgroundColor: "#faeddd"
             },
             headerTitleStyle: {
-                color: "#000000"
+                color: "#000000",
+                fontWeight: "bold",
+                paddingLeft: 125
             }
         }
     }
@@ -146,7 +144,7 @@ const ClassesNavigator = createStackNavigator (
             },
             headerTitleStyle: {
                 color: "#000000",
-                alignSelf: 'center',
+                paddingLeft: 125,
                 fontWeight: "bold",  
             }   
         }

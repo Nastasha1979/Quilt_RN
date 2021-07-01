@@ -37,11 +37,13 @@ class InspireDetail extends Component {
             <Modal 
                 visible={true} 
                 transparent={false}
-                animationType={"fade"}    
+                animationType={"fade"} 
+                  
             >
-                <ScrollView>
-                    <Text h2>{inspire.header}</Text>
-                    <Text h3>{inspire.caption}</Text>
+                <ScrollView style={style.modalBody} >
+                    <Text h2 style={style.modalHeader}>{inspire.header}</Text>
+                    <Text h3 style={style.modalCaption}>{inspire.caption}</Text>
+                    <Text h6 style={style.instructions}>Pinch to zoom in</Text>
                     <ImageZoom
                         cropWidth={Dimensions.get('window').width}
                         cropHeight={Dimensions.get('window').height - 250}
@@ -58,6 +60,8 @@ class InspireDetail extends Component {
                         type="solid"
                         color="red"
                         onPress={() => navigate("Inspiration")}
+                        buttonStyle={style.modalButton}
+                        titleStyle={style.modalButtonTitle}
                     />
                 </ScrollView>
             </Modal>
@@ -67,7 +71,35 @@ class InspireDetail extends Component {
 
 const style = StyleSheet.create({
     modalBody: {
-
+        flex: 1,
+        backgroundColor: "black"
+    },
+    modalHeader: {
+        alignSelf: "center",
+        justifyContent: "center",
+        color: "white"
+    },
+    modalCaption: {
+        alignSelf: "center",
+        justifyContent: "center",
+        color: "white"
+    },
+    modalButton: {
+        width: 150,
+        alignSelf: "center",
+        justifyContent: "center",
+        backgroundColor: "#faeddd",
+        
+    },
+    instructions: {
+        alignSelf: "center",
+        justifyContent: "center",
+        color: "white",
+        paddingTop: 15
+    },
+    modalButtonTitle: {
+        color: "black",
+        fontSize: 18
     }
 })
 

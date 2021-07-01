@@ -6,7 +6,25 @@ import { Entypo } from '@expo/vector-icons';
 
 
 class Newsletter extends Component {
-    
+    constructor(props) {
+        super(props);
+        this.state = {
+            fName: "",
+            email: "",
+        }
+    }
+
+    handleSubmit(){
+        console.log(JSON.stringify(this.state));
+        this.resetForm();
+    }
+
+    resetForm(){
+        this.setState({
+            fName: "",
+            email: ""
+        });
+    }
 
     render() {
         return(
@@ -18,6 +36,8 @@ class Newsletter extends Component {
                     leftIcon={
                         <AntDesign name="user" size={24} color="black" />
                     }
+                    onChangeText={value => this.setState({fName: value})}
+                    value={this.state.fName}
                 />
                 <Input
                     placeholder='Email'
@@ -25,12 +45,15 @@ class Newsletter extends Component {
                         <Entypo name="email" size={24} color="black" />
                     }
                     inputContainerStyle={style.emailContainer}
+                    onChangeText={value => this.setState({email: value})}
+                    value={this.state.email}
                 />
                 <Button
                     title="Sign Up"
                     raised
                     buttonStyle={style.buttonStyle}
                     containerStyle={style.btnContainer}
+                    onPress={() => this.handleSubmit()}
                 />
 
             </View>
