@@ -62,6 +62,7 @@ class InspireDetail extends Component {
                         onPress={() => navigate("Inspiration")}
                         buttonStyle={style.modalButton}
                         titleStyle={style.modalButtonTitle}
+                        containerStyle={style.modalButtonContainer}
                     />
                 </ScrollView>
             </Modal>
@@ -90,6 +91,9 @@ const style = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#faeddd",
         
+    },
+    modalButtonContainer: {
+        marginTop: 20
     },
     instructions: {
         alignSelf: "center",

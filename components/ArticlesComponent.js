@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { ScrollView, FlatList, StyleSheet, View } from "react-native";
-import { ListItem, Text } from "react-native-elements";
+import { ScrollView, FlatList, StyleSheet, View} from "react-native";
+import { ListItem, Text, Avatar } from "react-native-elements";
 import { baseUrl } from "../shared/baseUrl";
 import { connect } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
-import { useFonts, Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
+import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 
 const mapStateToProps = state => {
     return{
@@ -38,7 +38,8 @@ class Articles extends Component {
         const { navigate } = this.props.navigation;
         const RenderArticles = ({item}) => {
             return( 
-                <ListItem onPress={() => navigate("ArticleDetail", {articleId: item.key})}>  
+                <ListItem onPress={() => navigate("ArticleDetail", {articleId: item.key})} containerStyle={style.listItemStyle}>
+                    <Avatar source={{uri: baseUrl + item.pic}} rounded/>  
                     <ListItem.Content>
                         <ListItem.Title>{item.title}</ListItem.Title>
                         <ListItem.Subtitle>{item.author}</ListItem.Subtitle>
@@ -51,8 +52,8 @@ class Articles extends Component {
         }
 
         return(
-            <ScrollView>
-                <Text h2 style={style.topTitle}>Current Articles</Text>
+            <ScrollView style={style.wholeContainer}>
+                <Text style={style.topTitle}>Current Articles</Text>
                 <FlatList
                     data={this.props.articles.articles}
                     renderItem={RenderArticles}
@@ -65,18 +66,26 @@ class Articles extends Component {
 
 const style = StyleSheet.create({
     wholeContainer: {
-
+        backgroundColor: "#faeddd",
+    },
+    listItemStyle: {
+        marginHorizontal: 10,
+        borderRadius: 10,
+        borderWidth: 1,
+        marginVertical: 15
     },
     topTitle: {
         alignSelf: "center",
         justifyContent: "center",
-        fontFamily: "Quicksand_600SemiBold"
+        fontFamily: "Quicksand_600SemiBold",
+        marginVertical: 10,
+        fontSize: 30
     },
     articleTitle: {
-
+        fontFamily: "Quicksand_600SemiBold",
     },
     articleAuthor: {
-
+        fontFamily: "Quicksand_400Regular"
     }
 });
 

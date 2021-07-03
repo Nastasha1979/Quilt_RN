@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet, ScrollView } from "react-native";
 import { Text, ListItem, Button, Avatar } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { deleteFavoriteClass, deleteFavoriteArticle } from "../redux/ActionCreators";
+import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 
 const mapStateToProps = state => {
     return {
@@ -20,6 +21,15 @@ const mapDispatchToProps = {
 };
 
 class Favorites extends Component {
+    constructor(props){
+        super(props);
+        this.state ={
+            fontsLoaded: {
+                Quicksand_400Regular, 
+                Quicksand_600SemiBold
+            }
+        }
+    }
 
     static navigationOptions = {
         title: "My Favorites"
@@ -33,13 +43,12 @@ class Favorites extends Component {
                 <View>
                     <ListItem
                         onPress={() => navigate("ClassDetail", {classId: item.id})}
-                        topDivider
-                        bottomDivider
+                        containerStyle={style.listItemStyle}
                     >
                         <Avatar source={{uri: baseUrl + item.picUrl}} rounded/>
                         <ListItem.Content>
-                            <ListItem.Title>{item.title}</ListItem.Title>
-                            <ListItem.Subtitle>{item.instructor}</ListItem.Subtitle> 
+                            <ListItem.Title style={style.listItemTitle}>{item.title}</ListItem.Title>
+                            <ListItem.Subtitle style={style.listItemSubtitle}>{item.instructor}</ListItem.Subtitle> 
                         </ListItem.Content>
                         
                     </ListItem>
@@ -58,13 +67,12 @@ class Favorites extends Component {
                 <View>
                     <ListItem
                        onPress={() => navigate("ArticleDetail", {articleId: item.key})}
-                       topDivider
-                       bottomDivider
+                       containerStyle={style.listItemStyle}
                     >   
                         <Avatar source={{uri: baseUrl + item.pic}} rounded/>
                         <ListItem.Content>
-                            <ListItem.Title>{item.title}</ListItem.Title>
-                            <ListItem.Subtitle>{item.author}</ListItem.Subtitle>
+                            <ListItem.Title style={style.listItemTitle}>{item.title}</ListItem.Title>
+                            <ListItem.Subtitle style={style.listItemSubtitle}>{item.author}</ListItem.Subtitle>
                         </ListItem.Content>
                         
                     </ListItem>
@@ -79,24 +87,49 @@ class Favorites extends Component {
         }
         return(
             
-            <View>
+            <ScrollView style={style.container}>
                 {console.log(this.props.articles.articles.key)}
-                <Text h2>Favorite Classes</Text>
+                <Text style={style.favoriteTitle}>Favorite Classes</Text>
                 <FlatList
                     data={this.props.classInfo.classInfo.filter(classInfo => this.props.favoritesClass.includes(classInfo.id))}
                     renderItem={renderFavoriteClasses}
                     keyExtractor={item => item.id.toString()}
                 />
-                <Text h2>Favorite Articles</Text>
+                <Text style={style.favoriteTitle}>Favorite Articles</Text>
                 <FlatList
                     data={this.props.articles.articles.filter(article => this.props.favoritesArticle.includes(article.key))}
                     renderItem={renderFavoriteArticles}
                     keyExtractor={item => item.key.toString()}
                 />
-            </View>
+            </ScrollView>
 
         );
     }
 }
+
+const style = StyleSheet.create({
+    container: {
+        backgroundColor: "#faeddd"
+    },
+    favoriteTitle: {
+        fontFamily: "Quicksand_600SemiBold",
+        alignSelf: "center",
+        justifyContent: "center",
+        fontSize: 30,
+        textDecorationLine: "underline",
+        marginVertical: 10
+    },
+    listItemStyle: {
+        marginHorizontal: 10,
+        borderRadius: 10,
+        borderWidth: 1
+    },
+    listItemTitle: {
+        fontFamily: "Quicksand_600SemiBold"
+    },
+    listITemSubtitle: {
+        fontFamily: "Quicksand_400Regular"
+    }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

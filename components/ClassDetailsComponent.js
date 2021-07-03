@@ -51,7 +51,7 @@ function RenderClass(props){
                 />
                 <View> 
                     <Icon
-                        name={props.favorite ? "heart-o": "heart"}
+                        name={props.favorite ? "heart": "heart-o"}
                         type="font-awesome"
                         raised
                         reversed
@@ -59,7 +59,7 @@ function RenderClass(props){
                     /> 
                 </View>
                 <View style={style.tableContainer}>
-                    <Table style={style.outerTable} borderStyle={{borderWidth: 1, borderColor: "black"}}>
+                    <Table style={style.outerTable} borderStyle={style.borderStyle}>
                         <TableWrapper style={style.tableWrapper}>
                             <Rows
                                 data={DataTable}
@@ -250,14 +250,19 @@ const style = StyleSheet.create({
     },
     tableContainer: {
         flex: 1,
-        padding: 16
+        padding: 16,
+        
     },
     outerContainer: {
         borderWidth: 2,
-        borderColor: "#c8e1ff"
+        borderColor: "#c8e1ff",
     },
-    tableWrapper: {
-
+    outerTable: {
+        
+    },
+    borderStyle: {
+        borderWidth: 1, 
+        borderColor: "black"
     },
     rowData: {
         justifyContent: "center"

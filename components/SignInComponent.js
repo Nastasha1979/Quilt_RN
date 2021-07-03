@@ -1,23 +1,38 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { Text, Input, Button } from "react-native-elements";
-import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
+import { Girassol_400Regular } from "@expo-google-fonts/girassol";
 
 class SignIn extends Component {
     constructor(props){
         super(props);
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            fontsLoaded: {
+                Quicksand_400Regular,
+                Quicksand_600SemiBold,
+                Girassol_400Regular
+            }
         }
     }
 
     handleSignIn() {
         console.log(JSON.stringify(this.state));
-        this.resetForm();
+        Alert.alert(
+            `${this.state.username} is now signed in.`,
+            "Enjoy our App!",
+            [
+                {
+                    text: "OK",
+                    onPress: () => this.resetForm()
+                }
+            ],
+            {cancelable: false}
+        );
     }
 
     resetForm() {
@@ -32,12 +47,13 @@ class SignIn extends Component {
     render() {
         return(
             <View style={style.container}>
-                <Text h2 style={style.h2Text}>Sign In</Text>
-                <Text h4 style={style.h4Text}>Save all of your favorite classes, articles, and more!</Text>
+                <Text style={style.logo}>Needle & Thread</Text>
+                <Text style={style.h2Text}>Sign In</Text>
+                <Text style={style.h4Text}>Save all of your favorite classes, articles, and more!</Text>
                 <Input
                     placeholder='User Name'
                     leftIcon={
-                        <AntDesign name="user" size={24} color="black" />
+                        <Entypo name="user" size={24} color="black" />
                     }
                     inputContainerStyle={style.emailContainer}
                     onChangeText={value => this.setState({username: value})}
@@ -72,20 +88,29 @@ const style = StyleSheet.create({
         flex: 1,
         alignItems: "center"
     },
+    logo: {
+        fontFamily: "Girassol_400Regular",
+        fontSize: 38,
+        marginTop: 70
+    },
     h2Text: {
         textAlign: "center",
         marginTop: 20,
-        marginBottom: 20
+        marginBottom: 20,
+        fontFamily: "Quicksand_600SemiBold",
+        fontSize: 36
        
     },
     h4Text: {
         textAlign: "center",
-        marginBottom: 50,
-        fontWeight: "bold",
-        width: 250
+        marginBottom: 30,
+        width: 300,
+        fontFamily: "Quicksand_600SemiBold",
+        fontSize: 20
     },
     emailContainer: {
-        margin: 20 
+        marginHorizontal: 15,
+        marginVertical: 10
     },
     buttonStyle: {
         backgroundColor: "red",

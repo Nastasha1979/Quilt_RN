@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import { Card, Button, ListItem, Image } from "react-native-elements";
+import { ScrollView, View, Text, FlatList, StyleSheet } from "react-native";
+import { Card, Button, ListItem, Image, Tile } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 
 const mapStateToProps = state => {
     return{
@@ -11,7 +12,16 @@ const mapStateToProps = state => {
 };
 
 class Classes extends Component {
-    
+    constructor(props){
+        super(props);
+        this.state ={
+            fontsLoaded: {
+                Quicksand_400Regular, 
+                Quicksand_600SemiBold
+            }
+        }
+    }
+
     static navigationOptions = {
         title: "Classes"
     }
@@ -22,41 +32,37 @@ class Classes extends Component {
         const renderClassItem = ({item}) => {
             console.log(item);
             return(
-                <ListItem style={style.listItem}>
-                    <Card >
-                        <Image 
-                            source={{uri: baseUrl + item.pic}} 
-                            style={style.image}    
-                        />
-                        <Card.Title style={style.title}>{item.title}</Card.Title>
-                        <Text style={style.description}>
-                            {item.description}
-                        </Text>
-                        <Button
-                            title="Learn More"
-                            type="solid"
-                            raised
-                            buttonStyle={style.buttonContainer}
-                            titleStyle={style.buttonTitleStyle}
-                            onPress={() => navigate("ClassDetail", { 
-                                classId: item.id 
-                            })}
-                        />
-                    </Card>
+                <ListItem>
+                    <Tile
+                        imageSrc={{uri: baseUrl + item.pic}}  
+                        // style={style.image}    
+                        featured
+                        width={350}
+                        title={item.title}
+                        caption={item.description}
+                        imageContainerStyle={style.imageContainerStyle}
+                        titleStyle={style.titleStyle}
+                        captionStyle={style.captionStyle}
+                        overlayContainerStyle={style.overlayContainerStyle}
+                        onPress={() => navigate("ClassDetail", { 
+                            classId: item.id 
+                        })}
+                    />                       
                 </ListItem>
             );
         };
 
         return(
-            <View style={style.container}>
-                <Text style={{textAlign: "center", fontSize: 22, paddingTop: 10, fontWeight: "bold"}}>Available Classes</Text>
+            <ScrollView style={style.container}>
+                <Text style={style.mainTitle}>Available Classes</Text>
                 <FlatList
                     data={this.props.classesData.classesData}
                     renderItem={renderClassItem}
                     keyExtractor={item => item.id.toString()}
+                    
                 >
                 </FlatList>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -66,29 +72,37 @@ const style = StyleSheet.create({
     container: {
         flex: 1
     },
-    title: {
-        fontSize: 18,
-        marginTop: 10
+    mainTitle: {
+        textAlign: "center", 
+        fontSize: 30, 
+        paddingTop: 10, 
+        fontFamily: "Quicksand_600SemiBold"
     },
-    description: {
-        marginBottom: 10,
-        textAlign: "center",
-        fontSize: 16
-    },
-    listItem: {
-        flex: 1,
-        alignSelf: "stretch"
-    },
-    image: {
+    overlayContainerStyle: {
+        borderWidth: 1,
+        height: 100,
         width: 300,
-        height: 175
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#fdf9f2",
+        borderRadius: 5,
+        marginTop: 80,
+        marginLeft: 30,
+        opacity: 1 
     },
-    buttonContainer: {
-        backgroundColor: "#faeddd"
+    imageContainerStyle: {
+        borderRadius: 15   
     },
-    buttonTitleStyle: {
-        color: "black"
+    titleStyle: {
+        color: "black",
+        fontFamily: "Quicksand_400Regular"
+    },
+    captionStyle: {
+        color: "black",
+        fontFamily: "Quicksand_400Regular",
+        fontSize: 16
     }
+    
 })
 
 export default connect(mapStateToProps)(Classes);

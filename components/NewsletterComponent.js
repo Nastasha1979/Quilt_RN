@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { Text, Input, Button } from "react-native-elements";
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
+import { Girassol_400Regular } from "@expo-google-fonts/girassol";
 
 
 class Newsletter extends Component {
@@ -11,12 +13,28 @@ class Newsletter extends Component {
         this.state = {
             fName: "",
             email: "",
+            fontsLoaded: {
+                Quicksand_400Regular,
+                Quicksand_600SemiBold,
+                Girassol_400Regular
+            }
         }
     }
 
     handleSubmit(){
         console.log(JSON.stringify(this.state));
-        this.resetForm();
+        Alert.alert(
+            `Thanks for signing up for our newsletter ${this.state.fName}!`,
+            `Your first edition will be set to ${this.state.email} today`,
+            [
+                {
+                    text: "OK",
+                    onPress: () => this.resetForm()
+                }
+            ],
+            {cancelable: false}
+        );
+        
     }
 
     resetForm(){
@@ -29,8 +47,9 @@ class Newsletter extends Component {
     render() {
         return(
             <View style={style.container}>
-                <Text h2 style={style.h2Text}>Newsletter</Text>
-                <Text h5 style={style.h5Text}>Get free tips, tricks, and patterns. Its Free!</Text>
+                <Text style={style.logo}>Needle & Thread</Text>
+                <Text style={style.h2Text}>Newsletter</Text>
+                <Text style={style.h5Text}>Get free tips, tricks, and patterns. Its Free!</Text>
                 <Input
                     placeholder='First Name'
                     leftIcon={
@@ -67,16 +86,25 @@ const style = StyleSheet.create({
         flex: 1,
         alignItems: "center"
     },
+    logo: {
+        fontFamily: "Girassol_400Regular",
+        fontSize: 38,
+        marginTop: 70
+    },
     h2Text: {
         textAlign: "center",
         marginTop: 20,
-        marginBottom: 20
+        marginBottom: 20,
+        fontFamily: "Quicksand_600SemiBold",
+        fontSize: 36
        
     },
     h5Text: {
         textAlign: "center",
-        marginBottom: 20
-        
+        marginBottom: 30,
+        width: 300,
+        fontFamily: "Quicksand_600SemiBold",
+        fontSize: 20
     },
     emailContainer: {
         marginTop: 20,

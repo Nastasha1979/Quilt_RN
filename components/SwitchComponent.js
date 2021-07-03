@@ -137,14 +137,16 @@ const ClassesNavigator = createStackNavigator (
         initialRouteName: "Classes",
         defaultNavigationOptions: {
             headerTitleAlign: {
-                textAlign: "center"
+                textAlign: "center",
+                alignSelf: "center",
+                justifyContent: "center"
             },
             headerStyle: {
                 backgroundColor: "#faeddd"
             },
             headerTitleStyle: {
                 color: "#000000",
-                paddingLeft: 125,
+
                 fontWeight: "bold",  
             }   
         }
