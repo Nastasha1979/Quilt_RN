@@ -24,6 +24,7 @@ import { Girassol_400Regular } from "@expo-google-fonts/girassol";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 
 
+
 const mapDispatchToProps = {
     fetchClasses, 
     fetchComments, 
@@ -329,10 +330,7 @@ const style = StyleSheet.create({
         fontSize: 36,
         marginHorizontal: 10,
         marginVertical: 35
-    },
-    drawerStyle: {
-        fontFamily: "Quicksand_400Regular"
     }
-})
+});
 
 export default connect(null, mapDispatchToProps)(Switch);

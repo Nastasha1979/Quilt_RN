@@ -10,6 +10,7 @@ const mapStateToProps = state => {
     return {
         articles: state.articles,
         classInfo: state.classInfo,
+        carousel: state.carousel,
         favoritesClass: state.favoritesClass,
         favoritesArticle: state.favoritesArticle
     };
@@ -17,7 +18,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     deleteFavoriteClass: classInfoId => deleteFavoriteClass(classInfoId),
-    deleteFavoriteArticle: articleId => deleteFavoriteArticle(articleId)
+    deleteFavoriteArticle: articleId => deleteFavoriteArticle(articleId),
 };
 
 class Favorites extends Component {
@@ -85,10 +86,11 @@ class Favorites extends Component {
                 </View>
             );
         }
+
+
         return(
             
             <ScrollView style={style.container}>
-                {console.log(this.props.articles.articles.key)}
                 <Text style={style.favoriteTitle}>Favorite Classes</Text>
                 <FlatList
                     data={this.props.classInfo.classInfo.filter(classInfo => this.props.favoritesClass.includes(classInfo.id))}

@@ -279,6 +279,7 @@ export const deleteFavoriteArticle = articleId => ({
 });
 
 
+
 export const postComment = (classId, header, body) => dispatch => {
     const newComment = {
         classId,

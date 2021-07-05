@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import ImageZoom from "react-native-image-pan-zoom";
 import { NavigationEvents } from "react-navigation";
-import { Button, Text } from "react-native-elements";
+import { Button, Text, Icon } from "react-native-elements";
 
 const mapStateToProps = state => {
     return{
-        carousel: state.carousel,
+        carousel: state.carousel
     };
 };
 
@@ -17,7 +17,7 @@ const mapStateToProps = state => {
 class InspireDetail extends Component {
     constructor(props) {
         super(props);
-        this.state ={
+        this.state = {
             showModal: true
         }
     }
@@ -25,13 +25,14 @@ class InspireDetail extends Component {
         title: "Inspiration - Detail"
     }
 
+    
     toggleModal() {
         this.setState({showModal: !this.state.showModal});
     }
 
     render() {
         const { navigate } = this.props.navigation;
-        const pictureId = this.props.navigation.getParam("pictureId");
+        const pictureId = this.props.navigation.getParam("pictureId");  
         const inspire = this.props.carousel.carousel.filter(inspire => inspire.key === +pictureId)[0];
         return(
             <Modal 
