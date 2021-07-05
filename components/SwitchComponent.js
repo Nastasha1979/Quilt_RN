@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { Icon } from "react-native-elements";
 import Home from "./HomeComponent";
 import Classes from "./ClassesComponent";
 import Articles from "./ArticlesComponent";
@@ -13,11 +14,14 @@ import ArticleDetail from "./ArticleDetailComponent";
 import Favorites from "./FavoritesComponent";
 import SignIn from "./SignInComponent";
 import Constants from "expo-constants";
+import SafeAreaView from "react-native-safe-area-view";
 import { createStackNavigator } from "react-navigation-stack";
-import { createDrawerNavigator } from "react-navigation-drawer";
+import { createDrawerNavigator, DrawerItems } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
 import { fetchClasses, fetchComments, fetchClassInfo, fetchArticles, fetchCarousel } from "../redux/ActionCreators";
+import { Girassol_400Regular } from "@expo-google-fonts/girassol";
+import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 
 
 const mapDispatchToProps = {
@@ -34,9 +38,9 @@ const SignInNavigator = createStackNavigator (
         SignIn: { screen: SignIn }
     },
     {
-        defaultNavigationOptions: {
+        defaultNavigationOptions: ({
             headerShown: false
-        }
+        })
     }
 );
 
@@ -120,8 +124,7 @@ const ArticlesNavigator = createStackNavigator (
             },
             headerTitleStyle: {
                 color: "#000000",
-                fontWeight: "bold",
-                paddingLeft: 125
+                fontWeight: "bold"
             }
         }
     }
@@ -165,20 +168,124 @@ const HomeNavigator = createStackNavigator(
     
 );
 
+const CustomDrawerHeader = props => (
+    <ScrollView>
+        <SafeAreaView
+            forceInset={{top: "always", horizontal: "never"}}
+        >
+            <View>
+                <View style={{flex: 2}}>
+                    <Text style={style.drawerHeaderText}>Needle & Thread</Text>
+                </View>
+            </View>
+            <DrawerItems {...props} />
+        </SafeAreaView>
+    </ScrollView>
+);
+
 const SwitchNavigator = createDrawerNavigator(
     {
-        Home: { screen: HomeNavigator },
-        Classes: { screen: ClassesNavigator},
-        Inspiration: { screen: InspirationNavigator },
-        Articles: { screen: ArticlesNavigator },
-        Newsletter: { screen: NewsletterNavigator },
-        Favorites: { screen: FavoritesNavigator },
-        About: { screen: AboutNavigator },
-        "Sign In": { screen: SignInNavigator }
+        Home: { screen: HomeNavigator, 
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon 
+                        name="home"
+                        type="font-awesome-5"
+                        size={20}
+                        color={tintColor}
+                    />
+                )
+            } 
+        },
+        Classes: { screen: ClassesNavigator,
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon 
+                        name="chalkboard"
+                        type="font-awesome-5"
+                        size={20}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        Inspiration: { screen: InspirationNavigator,
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon 
+                        name="images"
+                        type="font-awesome-5"
+                        size={20}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        Articles: { screen: ArticlesNavigator,
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon 
+                        name="newspaper"
+                        type="font-awesome-5"
+                        size={20}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        Newsletter: { screen: NewsletterNavigator,
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon 
+                        name="envelope-open-text"
+                        type="font-awesome-5"
+                        size={20}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        Favorites: { screen: FavoritesNavigator,
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon 
+                        name="heart"
+                        type="font-awesome-5"
+                        size={20}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        About: { screen: AboutNavigator,
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon 
+                        name="at"
+                        type="font-awesome-5"
+                        size={20}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        "Sign In": { screen: SignInNavigator,
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon 
+                        name="sign-in-alt"
+                        type="font-awesome-5"
+                        size={20}
+                        color={tintColor}
+                    />
+                )
+            }
+        }
         
     },
     {
-        drawerBackgroundColor: "#fff",    
+        drawerBackgroundColor: "#faeddd",
+        contentComponent: CustomDrawerHeader
     }
     
 );
@@ -186,7 +293,14 @@ const SwitchNavigator = createDrawerNavigator(
 const AppNavigator = createAppContainer(SwitchNavigator);
 
 class Switch extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            Girassol_400Regular,
+            Quicksand_400Regular,
+            Quicksand_600SemiBold
+        };
+    }
     componentDidMount() {
         this.props.fetchClasses();
         this.props.fetchClassInfo();
@@ -208,5 +322,17 @@ class Switch extends Component {
         );
     }
 }
+
+const style = StyleSheet.create({
+    drawerHeaderText: {
+        fontFamily: "Girassol_400Regular",
+        fontSize: 36,
+        marginHorizontal: 10,
+        marginVertical: 35
+    },
+    drawerStyle: {
+        fontFamily: "Quicksand_400Regular"
+    }
+})
 
 export default connect(null, mapDispatchToProps)(Switch);

@@ -68,6 +68,12 @@ class ArticleDetail extends Component {
     markFavorite(articleId) {
         this.props.postFavoriteArticle(articleId);
     }
+
+    static navigationOptions =({navigation}) => {
+        return {
+            title: navigation.getParam("articleTitle")
+        };
+    }
     
     render(){
         const articleId = this.props.navigation.getParam("articleId");

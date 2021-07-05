@@ -38,7 +38,7 @@ class Articles extends Component {
         const { navigate } = this.props.navigation;
         const RenderArticles = ({item}) => {
             return( 
-                <ListItem onPress={() => navigate("ArticleDetail", {articleId: item.key})} containerStyle={style.listItemStyle}>
+                <ListItem onPress={() => navigate("ArticleDetail", {articleId: item.key, articleTitle: item.title})} containerStyle={style.listItemStyle}>
                     <Avatar source={{uri: baseUrl + item.pic}} rounded/>  
                     <ListItem.Content>
                         <ListItem.Title>{item.title}</ListItem.Title>
