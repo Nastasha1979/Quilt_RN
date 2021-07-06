@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ScrollView, StyleSheet, Modal, Switch } from "react-native";
+import { View, ScrollView, StyleSheet, Modal, Switch, Share } from "react-native";
 import { Text, Button, Tile, Icon, Input } from "react-native-elements";
 import { postFavoriteClass } from "../redux/ActionCreators";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
@@ -38,7 +38,16 @@ function RenderClass(props){
             ["Materials Provided", classStuff.materialsProvided.map(mP => {return(mP + " \n")})]
         ];
 
-        
+        const shareClass = (title, description, instructor, url, cost, id) => {
+            Share.share({
+                title,
+                message: `Hey Check out this class! \n\n${title}: \n\nInstructor: ${instructor} \n\nDescription: ${description} \n\nCost: ${cost}. \n\n It's hosted by Needle & Thread. Sign Up Here: ${baseUrl + "classInfo/" + id}`,
+                url
+            },
+            {
+                dialogTitle: "Share " + title
+            });
+        };
 
         return(
             <ScrollView>
@@ -49,14 +58,21 @@ function RenderClass(props){
                     featured
                     titleStyle={style.tileTitle}
                 />
-                <View> 
+                <View style={style.iconView}> 
                     <Icon
                         name={props.favorite ? "heart": "heart-o"}
                         type="font-awesome"
                         raised
                         reversed
                         onPress={() => props.favorite ? console.log("Already Set as a favorite") : props.markFavorite()}
-                    /> 
+                    />
+                    <Icon
+                        name="share"
+                        type="font-aweosome" 
+                        raised
+                        reversed
+                        onPress={() => shareClass(classStuff.title, classStuff.description, classStuff.instructor, classStuff.picUrl, classStuff.cost, classStuff.id)}
+                    />
                 </View>
                 <View style={style.tableContainer}>
                     <Table style={style.outerTable} borderStyle={style.borderStyle}>
@@ -225,6 +241,10 @@ class ClassDetail extends Component {
 const style = StyleSheet.create({
     wholeView: {
         flex: 1
+    },
+    iconView: {
+        flexDirection: "row",
+        justifyContent: "center"
     },
     buttonView: {
         flexDirection: "row",

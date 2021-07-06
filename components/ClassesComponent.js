@@ -26,6 +26,7 @@ class Classes extends Component {
         title: "Classes"
     }
 
+
     render() {
         const { navigate } = this.props.navigation;
 
