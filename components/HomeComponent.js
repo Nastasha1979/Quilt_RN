@@ -4,6 +4,7 @@ import { Tile, Button } from "react-native-elements";
 import { useFonts, Girassol_400Regular } from "@expo-google-fonts/girassol";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 
+
 GetHome = ({navigate}) => {
     let [fontsLoaded] = useFonts({
         Girassol_400Regular,
@@ -47,11 +48,13 @@ class Home extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
-
+        
                 
             return(
                     <ScrollView style={style.scrollV}>
-                        <GetHome navigate={navigate}/>
+                        <GetHome 
+                            navigate={navigate}   
+                        />
                     </ScrollView>
                     
                 

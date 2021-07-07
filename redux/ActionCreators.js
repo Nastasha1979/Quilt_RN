@@ -3,7 +3,7 @@ import { baseUrl } from "../shared/baseUrl";
 
 
 export const fetchClasses = () => dispatch => {
-
+    
     dispatch(classesLoading());
 
     return fetch(baseUrl + "classesData")
@@ -285,7 +285,7 @@ export const addCarouselImage = newCarouselImage => ({
 export const postFavoriteClass = classInfoId => dispatch => {
     setTimeout(() => {
         dispatch(addFavoriteClass(classInfoId));
-    }, 1000);
+    }, 500);
 };
 
 export const addFavoriteClass = classInfoId => ({
@@ -301,7 +301,7 @@ export const deleteFavoriteClass = classInfoId => ({
 export const postFavoriteArticle = articleId => dispatch => {
     setTimeout(() => {
         dispatch(addFavoriteArticle(articleId));
-    }, 1000);
+    }, 500);
 };
 
 export const addFavoriteArticle = articleId => ({

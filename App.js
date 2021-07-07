@@ -1,5 +1,6 @@
 import React from 'react';
 import Switch from "./components/SwitchComponent";
+import Loading from "./components/LoadingComponent";
 import { LogBox } from "react-native";
 import { PersistGate } from "redux-persist/es/integration/react";
 import { Provider } from "react-redux";
@@ -14,7 +15,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate
-        loading = {null}
+        loading = {<Loading />}
         persistor={persistor}
       >
         <Switch />

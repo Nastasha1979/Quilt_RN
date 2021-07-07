@@ -6,6 +6,7 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { postSignUp } from "../redux/ActionCreators";
+import Loading from "./LoadingComponent";
 
 const mapStateToProps = state => {
     return{
@@ -26,6 +27,9 @@ function RenderClass(props){
 
     const { classStuff } = props;
 
+    if(props.isLoading){
+        return <Loading />
+    }
 
     if(classStuff){
 
@@ -171,6 +175,9 @@ class ClassDetail extends Component {
     }
 
     render() {
+        if(this.props.classInfo.isLoading){
+            return <Loading />
+        }
         const classId = this.props.navigation.getParam("classId");
         const classStuff = this.props.classInfo.classInfo.filter(classInfo => classInfo.id === +classId)[0];
         const { navigate } = this.props.navigation;
@@ -185,6 +192,7 @@ class ClassDetail extends Component {
                     onShowModal={() => this.toggleModal()}
                     signUp={this.state.signUp}
                     onUnenroll={() => this.unenroll()}
+                    isLoading={this.props.classInfo.isLoading}
                 />
 
                 <Modal

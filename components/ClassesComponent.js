@@ -4,6 +4,7 @@ import { Card, Button, ListItem, Image, Tile } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
+import Loading from "./LoadingComponent";
 
 const mapStateToProps = state => {
     return{
@@ -31,7 +32,10 @@ class Classes extends Component {
         const { navigate } = this.props.navigation;
 
         const renderClassItem = ({item}) => {
-            console.log(item);
+            if(this.props.classesData.isLoading){ 
+                return <Loading />
+            }
+
             return(
                 <ListItem>
                     <Tile
