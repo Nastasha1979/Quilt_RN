@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { ScrollView, View, StyleSheet, Alert } from "react-native";
 import { Text, Input, Button, CheckBox } from "react-native-elements";
 import * as SecureStore from "expo-secure-store";
 import { Entypo } from '@expo/vector-icons';
@@ -78,7 +78,7 @@ class SignIn extends Component {
 
     render() {
         return(
-            <View style={style.container}>
+            <ScrollView style={style.container}>
                 <Text style={style.logo}>Needle & Thread</Text>
                 <Text style={style.h2Text}>Sign In</Text>
                 <Text style={style.h4Text}>Save all of your favorite classes, articles, and more!</Text>
@@ -131,7 +131,7 @@ class SignIn extends Component {
                         }}
                     />
                 }
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -139,33 +139,35 @@ class SignIn extends Component {
 const style = StyleSheet.create({
     container: {
         backgroundColor: "#faeddd",
-        flex: 1,
-        alignItems: "center"
+        flex: 1
     },
     logo: {
         fontFamily: "Girassol_400Regular",
         fontSize: 38,
         marginTop: 50,
-        marginBottom: 30
+        marginBottom: 30,
+        alignSelf: "center"
     },
     h2Text: {
         textAlign: "center",
         marginTop: 20,
         marginBottom: 20,
         fontFamily: "Quicksand_600SemiBold",
-        fontSize: 36
-       
+        fontSize: 36,
+        alignSelf: "center"
     },
     h4Text: {
         textAlign: "center",
         marginBottom: 30,
         width: 300,
         fontFamily: "Quicksand_600SemiBold",
-        fontSize: 20
+        fontSize: 20,
+        alignSelf: "center"
     },
     emailContainer: {
         marginHorizontal: 15,
-        marginVertical: 7
+        marginVertical: 7,
+        alignSelf: "center"
     },
     signInCheckbox: {
         backgroundColor: "#faeddd"
@@ -178,7 +180,10 @@ const style = StyleSheet.create({
                
     },
     btnContainer: {
-        marginTop: 50
+        marginTop: 50,
+        alignSelf: "center",
+        justifyContent: "center",
+        marginBottom: 20
     }
 
     

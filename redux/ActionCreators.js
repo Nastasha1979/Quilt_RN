@@ -242,7 +242,43 @@ export const carouselImagesFailed = errMess => ({
     payload: errMess
 });
 
+export const postCarousel = (header, caption, src) => dispatch => {
+    const newCarouselImage = {
+        header,
+        caption,
+        src,
+        altText: "User Submitted Image"
+    };
 
+    return fetch(baseUrl + "carousel", {
+        method: "POST",
+        body: JSON.stringify(newCarouselImage),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            const error = new Error(`Error ${response.status}: ${response.statusText}`);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => { throw error; }
+    )
+    .then(response => response.json())
+    .then(response => dispatch(addCarouselImage(response)))
+    .catch(error => {
+        console.log("post carousel Image", error.message);
+    });
+};
+
+export const addCarouselImage = newCarouselImage => ({
+    type: ActionTypes.ADD_CAROUSEL_IMAGE,
+    payload: newCarouselImage
+});
 
 
 

@@ -1,15 +1,21 @@
 import React, { Component } from "react";
 import { baseUrl } from "../shared/baseUrl";
 import { connect } from "react-redux";
-import { View, Text, ScrollView, FlatList, StyleSheet, Modal, Alert } from "react-native";
+import { postCarousel } from "../redux/ActionCreators";
+import { View, Text, ScrollView, FlatList, StyleSheet, Modal, Alert, Image } from "react-native";
 import { Tile, ListItem, Icon, Button, Input } from "react-native-elements";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
+import * as ImagePicker from "expo-image-picker";
 
 const mapStateToProps = state => {
     return{
         carousel: state.carousel,
     };
 };
+
+const mapDispatchToProps = {
+    postCarousel: (header, caption, src) => (postCarousel(header, caption, src))
+}
 
 
 
@@ -26,7 +32,7 @@ class Inspiration extends Component {
             showModal: false,
             header: "",
             caption: "",
-            src: ""
+            uploadedImg: baseUrl + "assets/imageplaceholder.jpg"
         }
     }
     static navigationOptions = {
@@ -40,11 +46,12 @@ class Inspiration extends Component {
     handleSubmit() {
         Alert.alert(
             "Quilt Submission",
-            `${this.state.caption}, Thank you for submitting ${this.state.header} from ${this.state.src}. We will review. Check back later to see your quilt.`,
+            `Thank you for submitting ${this.state.header} by ${this.state.caption}. We will review. Check back later to see your quilt.`,
             [
                 {
                     text: "Ok",
                     onPress: () => {
+                        this.props.postCarousel(this.state.header, this.state.caption, this.state.uploadedImg)
                         this.toggleModal()
                         this.resetForm()
                     }
@@ -58,8 +65,29 @@ class Inspiration extends Component {
         this.setState({
             header: "",
             caption: "",
-            src: ""
+            uploadedImg: baseUrl + "assets/imageplaceholder.jpg"
         });
+    }
+
+    getImageFromDevice = async () => {
+        const libraryPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if(libraryPermission.status !== "granted"){
+            Alert.alert("Sorry, we need camera roll permissions to upload an image.");
+        }
+
+        let newImage = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [3, 2],
+            quality: 1,
+        });
+
+        console.log(newImage);
+
+        if(!newImage.cancelled){
+            this.setState({uploadedImg: newImage.uri});
+            console.log(newImage.uri);
+        }
     }
 
     render() {
@@ -73,7 +101,7 @@ class Inspiration extends Component {
                         title={item.header}
                         caption={item.caption}
                         onPress={() => navigate("InspireDetail", { 
-                            pictureId: item.key 
+                            pictureId: item.id 
                         })}
                         captionStyle={style.caption}
                         titleStyle={style.topTitle}
@@ -82,6 +110,7 @@ class Inspiration extends Component {
     
                 );
         };
+
 
         return(
             <ScrollView>
@@ -99,7 +128,7 @@ class Inspiration extends Component {
                 <FlatList
                     data={this.props.carousel.carousel}
                     renderItem={renderTiles}
-                    keyExtractor={item => item.key.toString()}
+                    keyExtractor={item => item.id.toString()}
                 />
                 <Modal
                     visible={this.state.showModal}
@@ -107,6 +136,7 @@ class Inspiration extends Component {
                     animationType={"slide"}
                     
                 >
+                    <ScrollView>
                     <View style={style.modalWhole}>
                         <Text style={style.modalHeader}>Upload You Quilt Creation</Text>
                         <View style={style.modalInputView}>
@@ -130,16 +160,17 @@ class Inspiration extends Component {
                                     color: "gray"
                                 }}
                             />
-                            <Input
-                                placeholder=" Temporary Image URL"
-                                onChangeText={src => this.setState({src: src})}
-                                value={this.state.src}
-                                leftIcon={{
-                                    type: "font-awesome-5",
-                                    name: "address-book",
-                                    color: "gray"
-                                }}
-                            />
+                            <View style={style.imgView}>
+                                <Image
+                                    source={{uri: this.state.uploadedImg}}
+                                    style={style.modalImage}
+                                />
+                                <Button
+                                    title="Upload Image"
+                                    onPress={this.getImageFromDevice}
+                                    buttonStyle={style.uploadBtn}
+                                />
+                            </View>
                         </View>
                         <View style={style.modalButtonView}>
                             <Button
@@ -159,6 +190,7 @@ class Inspiration extends Component {
                             />
                         </View>
                     </View>
+                    </ScrollView>
                 </Modal>
             </ScrollView>
         );
@@ -178,8 +210,8 @@ const style = StyleSheet.create({
     },
     contentContainerStyle: {
         borderWidth: 1,
-        height: 100,
-        width: 300,
+        height: 130,
+        width: 280,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#fdf9f2",
@@ -196,8 +228,7 @@ const style = StyleSheet.create({
         paddingVertical: 10
     },
     modalHeader: {
-        alignSelf: "center",
-        justifyContent: "center",
+        textAlign: "center",
         fontSize: 30,
         fontFamily: "Quicksand_600SemiBold",
         paddingTop: 50
@@ -213,17 +244,27 @@ const style = StyleSheet.create({
     },
     modalButton: {
         backgroundColor: "#f3d6b1",
-        marginHorizontal: 10,
-        paddingHorizontal: 15
+        marginHorizontal: 20,
+        paddingHorizontal: 10
     },
     modalBtnTitleStyle: {
         color: "black",
         fontFamily: "Quicksand_400Regular"
+
     },
     modalInputView: {
         marginVertical: 60,
         marginHorizontal: 10
+    },
+    modalImage: {
+        width: 300,
+        height: 200
+    },
+    imgView: {
+        alignItems: "center",
+        justifyContent: "center"
     }
+    
 })
 
-export default connect(mapStateToProps)(Inspiration);
+export default connect(mapStateToProps, mapDispatchToProps)(Inspiration);

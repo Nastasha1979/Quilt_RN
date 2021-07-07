@@ -69,7 +69,7 @@ const style = StyleSheet.create({
         backgroundColor: "#faeddd"
     },
     topTitle: {
-        paddingTop: 50,
+        paddingTop: 40,
         paddingBottom: 35,
         textAlign: "center",
         fontSize: 42,
@@ -78,7 +78,7 @@ const style = StyleSheet.create({
 
     },
     imgStyle: {
-        height: 500,
+        height: 600,
         
     },
     titleStyle: {
@@ -99,7 +99,7 @@ const style = StyleSheet.create({
     buttonContainer: {
         alignItems: "center",
         justifyContent: "center",
-        paddingBottom: 30
+        marginBottom: 20
     }
 
 })

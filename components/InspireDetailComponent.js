@@ -33,7 +33,7 @@ class InspireDetail extends Component {
     render() {
         const { navigate } = this.props.navigation;
         const pictureId = this.props.navigation.getParam("pictureId");  
-        const inspire = this.props.carousel.carousel.filter(inspire => inspire.key === +pictureId)[0];
+        const inspire = this.props.carousel.carousel.filter(inspire => inspire.id === +pictureId)[0];
         return(
             <Modal 
                 visible={true} 
