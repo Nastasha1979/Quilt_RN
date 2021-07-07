@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { FlatList, View, StyleSheet, ScrollView } from "react-native";
 import { Text, ListItem, Button, Avatar } from "react-native-elements";
+import { SwipeRow } from "react-native-swipe-list-view";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { deleteFavoriteClass, deleteFavoriteArticle } from "../redux/ActionCreators";
@@ -39,51 +41,59 @@ class Favorites extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
+
         const renderFavoriteClasses = ({item}) => {
             return(
-                <View>
-                    <ListItem
-                        onPress={() => navigate("ClassDetail", {classId: item.id})}
-                        containerStyle={style.listItemStyle}
-                    >
-                        <Avatar source={{uri: baseUrl + item.picUrl}} rounded/>
-                        <ListItem.Content>
-                            <ListItem.Title style={style.listItemTitle}>{item.title}</ListItem.Title>
-                            <ListItem.Subtitle style={style.listItemSubtitle}>{item.instructor}</ListItem.Subtitle> 
-                        </ListItem.Content>
-                        
-                    </ListItem>
-                    <Button
-                        title="Remove Favorite"
-                        type="standard"
-                        color="red"
-                        onPress={() => this.props.deleteFavoriteClass(item.id)}
-                    />
-                </View>
+                <SwipeRow rightOpenValue={-100} style={style.swipeRow}>
+                    <View style={style.deleteView}>							
+                        <TouchableOpacity
+                            style={style.deleteTouchable}
+                            onPress={() => this.props.deleteFavoriteClass(item.id)}
+                        >
+                        <Text style={style.deleteText}>Remove</Text> 
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <ListItem
+                            onPress={() => navigate("ClassDetail", {classId: item.id})}
+                            containerStyle={style.listItemStyle}
+                        >
+                            <Avatar source={{uri: baseUrl + item.picUrl}} rounded/>
+                            <ListItem.Content>
+                                <ListItem.Title style={style.listItemTitle}>{item.title}</ListItem.Title>
+                                <ListItem.Subtitle style={style.listItemSubtitle}>{item.instructor}</ListItem.Subtitle> 
+                            </ListItem.Content> 
+                        </ListItem>
+                    </View>
+                </SwipeRow>
             );
         }
 
         const renderFavoriteArticles = ({item}) => {
             return(
-                <View>
-                    <ListItem
-                       onPress={() => navigate("ArticleDetail", {articleId: item.key})}
-                       containerStyle={style.listItemStyle}
-                    >   
-                        <Avatar source={{uri: baseUrl + item.pic}} rounded/>
-                        <ListItem.Content>
-                            <ListItem.Title style={style.listItemTitle}>{item.title}</ListItem.Title>
-                            <ListItem.Subtitle style={style.listItemSubtitle}>{item.author}</ListItem.Subtitle>
-                        </ListItem.Content>
-                        
-                    </ListItem>
-                    <Button
-                        title="Remove Favorite"
-                        type="standard"
-                        color="red"
-                        onPress={() => this.props.deleteFavoriteArticle(item.key)}
-                    />
-                </View>
+                <SwipeRow rightOpenValue={-100} style={style.swipeRow}>
+                    <View style={style.deleteView}>							
+                        <TouchableOpacity
+                            style={style.deleteTouchable}
+                            onPress={() => this.props.deleteFavoriteArticle(item.key)}
+                        >
+                        <Text style={style.deleteText}>Remove</Text> 
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <ListItem
+                        onPress={() => navigate("ArticleDetail", {articleId: item.key})}
+                        containerStyle={style.listItemStyle}
+                        >   
+                            <Avatar source={{uri: baseUrl + item.pic}} rounded/>
+                            <ListItem.Content>
+                                <ListItem.Title style={style.listItemTitle}>{item.title}</ListItem.Title>
+                                <ListItem.Subtitle style={style.listItemSubtitle}>{item.author}</ListItem.Subtitle>
+                            </ListItem.Content>
+                            
+                        </ListItem>
+                    </View>
+                </SwipeRow>
             );
         }
 
@@ -131,6 +141,25 @@ const style = StyleSheet.create({
     },
     listITemSubtitle: {
         fontFamily: "Quicksand_400Regular"
+    },
+    deleteView: {
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        flex: 1
+    },
+    deleteTouchable: {
+        backgroundColor: "#ff7979",
+        height: "100%",
+        justifyContent: "center",
+        padding: 10
+    },
+    deleteText: {
+        color: "white",
+        fontWeight: "700",
+        textAlign: "center",
+        fontSize: 16,
+        width: 100
     }
 });
 
