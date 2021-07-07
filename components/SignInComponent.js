@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { ScrollView, View, StyleSheet, Alert } from "react-native";
-import { Text, Input, Button, CheckBox } from "react-native-elements";
+import { Text, Input, Button, CheckBox, Icon } from "react-native-elements";
 import * as SecureStore from "expo-secure-store";
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 import { Girassol_400Regular } from "@expo-google-fonts/girassol";
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-class SignIn extends Component {
+class SignInTab extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -20,6 +21,16 @@ class SignIn extends Component {
                 Quicksand_600SemiBold,
                 Girassol_400Regular
             }
+        }
+    }
+
+    static navigationOptions = {
+        tabBarIcon: ({tintColor}) => {
+            <Icon
+                name="sign-in"
+                type="font-awesome"
+                iconStyle={{color: tintColor}}
+            />
         }
     }
 
@@ -135,6 +146,123 @@ class SignIn extends Component {
         );
     }
 }
+
+class RegisterTab extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fname: "",
+            username: "",
+            password: "",
+            email: "",
+            newsletter: false
+        }
+    }
+
+    static navigationOptions = {
+        tabBarIcon: ({tintColor}) => {
+            <Icon
+                name="user-plus"
+                type="font-awesome"
+                iconStyle={{color: tintColor}}
+            />
+        }
+    }
+    handleRegister() {
+        console.log(JSON.stringify(this.state));
+        this.resetForm();
+    }
+
+    resetForm() {
+        this.setState({
+            name: "",
+            username: "",
+            password: "",
+            email: "",
+            newsletter: false
+        });
+    }
+
+    render() {
+        return(
+            <ScrollView style={style.container}>
+                <Text style={style.logo}>Needle & Thread</Text>
+                <Text style={style.h2Text}>Register</Text>
+                <Text style={style.h4Text}>Sign Up for an account today to take advantage of classes, articles, and more!</Text>
+                <Input
+                    placeholder='Your Name'
+                    leftIcon={
+                        <Entypo name="user" size={24} color="black" />
+                    }
+                    inputContainerStyle={style.emailContainer}
+                    onChangeText={value => this.setState({name: value})}
+                    value={this.state.name}
+                />
+                <Input
+                    placeholder='Your Email'
+                    leftIcon={
+                        <Entypo name="user" size={24} color="black" />
+                    }
+                    inputContainerStyle={style.emailContainer}
+                    onChangeText={value => this.setState({email: value})}
+                    value={this.state.email}
+                />
+                <Input
+                    placeholder='User Name'
+                    leftIcon={
+                        <Entypo name="user" size={24} color="black" />
+                    }
+                    inputContainerStyle={style.emailContainer}
+                    onChangeText={value => this.setState({username: value})}
+                    value={this.state.username}
+                />
+                <Input
+                    placeholder='Password'
+                    leftIcon={
+                        <MaterialCommunityIcons name="form-textbox-password" size={24} color="black" />
+                    }
+                    inputContainerStyle={style.emailContainer}
+                    onChangeText={value => this.setState({password: value})}
+                    value={this.state.password}
+                    secureTextEntry={true}
+                />
+                <CheckBox
+                    title="Sign Up for Newsletter"
+                    center
+                    checked={this.state.newsletter}
+                    onPress={() => this.setState({remember: !this.state.newsletter})}
+                    containerStyle={style.signInCheckbox}
+                />                
+                <Button
+                    title="Register"
+                    raised
+                    buttonStyle={style.buttonStyle}
+                    containerStyle={style.btnContainer}
+                    onPress={() => {
+                        this.handleRegister()
+                    }}
+                />
+   
+            </ScrollView>
+        );
+    }
+}
+
+const SignIn = createBottomTabNavigator(
+    {
+        SignIn: SignInTab,
+        Register: RegisterTab
+    },
+    {
+        tabBarOptions: {
+            activeBackgroundColor: "#faeddd",
+            inactiveBackgroundColor: "CEC8FF",
+            activeTintColor: "black",
+            inactiveTintColor: "#808080",
+            labelStyle: {fontSize: 12}
+        }
+    }
+);
 
 const style = StyleSheet.create({
     container: {
