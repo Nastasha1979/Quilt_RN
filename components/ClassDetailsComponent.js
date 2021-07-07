@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ScrollView, StyleSheet, Modal, Switch, Share } from "react-native";
+import { View, ScrollView, StyleSheet, Modal, Switch, Share, Alert, ToastAndroid } from "react-native";
 import { Text, Button, Tile, Icon, Input } from "react-native-elements";
 import { postFavoriteClass } from "../redux/ActionCreators";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
@@ -141,9 +141,15 @@ class ClassDetail extends Component {
     }
     
     toggleSignUp() {
-        this.setState({signUp: !this.state.signUp});   
+        this.setState({signUp: !this.state.signUp});  
     }
 
+    unenroll() {
+        (Platform.OS === "ios")
+                ? Alert.alert(`You have been unenrolled from the course.`)
+                : ToastAndroid.show(`You have been unenrolled from the course`, ToastAndroid.LONG);
+        this.toggleSignUp();
+    }
 
     static navigationOptions = {
         title: "Class Detail"
@@ -156,6 +162,9 @@ class ClassDetail extends Component {
     courseSignUp(course) {
         if(this.state.signUp === true){
             this.props.postSignUp(course, this.state.name, this.state.signUp, this.state.isEnabled);
+            (Platform.OS === "ios")
+                ? Alert.alert(`You have signed up for ${course}.`)
+                : ToastAndroid.show(`You have signed up for ${course}`, ToastAndroid.SHORT)
         } else {
             console.log("The user didnt' sign up for the course.");
         }
@@ -175,7 +184,7 @@ class ClassDetail extends Component {
                     favorite={this.props.favoritesClass.includes(classId)}
                     onShowModal={() => this.toggleModal()}
                     signUp={this.state.signUp}
-                    onUnenroll={() => this.toggleSignUp()}
+                    onUnenroll={() => this.unenroll()}
                 />
 
                 <Modal
