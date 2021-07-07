@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, View, Text, FlatList, StyleSheet } from "react-native";
+import { ScrollView, View, Text, FlatList, StyleSheet, Dimensions} from "react-native";
 import { Card, Button, ListItem, Image, Tile } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
@@ -81,18 +81,19 @@ const style = StyleSheet.create({
     },
     overlayContainerStyle: {
         borderWidth: 1,
-        height: 100,
-        width: 300,
+        height: 200,
+        width: 280,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#fdf9f2",
         borderRadius: 5,
-        marginTop: 80,
+        marginTop: 50,
         marginLeft: 30,
         opacity: 1 
     },
     imageContainerStyle: {
-        borderRadius: 15   
+        borderRadius: 15,
+        width: Dimensions.get('window').width - 25 
     },
     titleStyle: {
         color: "black",

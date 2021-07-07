@@ -30,12 +30,10 @@ function RenderClass(props){
     if(classStuff){
 
         const DataTable= [
-            ["Instructor", classStuff.instructor, ],
             ["Cost", classStuff.cost],
             ["Level", classStuff.level],
             ["Location", classStuff.location],
-            ["Date", classStuff.date],
-            ["Materials Provided", classStuff.materialsProvided.map(mP => {return(mP + " \n")})]
+            ["Materials Provided", classStuff.materialsProvided.map(mP => {return("-" + mP + " \n")})]
         ];
 
         const shareClass = (title, description, instructor, url, cost, id) => {
@@ -74,6 +72,14 @@ function RenderClass(props){
                         onPress={() => shareClass(classStuff.title, classStuff.description, classStuff.instructor, classStuff.picUrl, classStuff.cost, classStuff.id)}
                     />
                 </View>
+                <View style={style.descriptionContainer}>
+                    <Text style={style.details}>Your Instructor: {classStuff.instructor}</Text>
+                    <Text style={style.details}>When: {classStuff.date}</Text>
+                    <Text style={style.descriptionHead}>What You'll Learn</Text>
+                    <Text h5 style={style.descriptionText}>
+                        {classStuff.description}
+                    </Text>
+                </View>
                 <View style={style.tableContainer}>
                     <Table style={style.outerTable} borderStyle={style.borderStyle}>
                         <TableWrapper style={style.tableWrapper}>
@@ -85,12 +91,6 @@ function RenderClass(props){
                         </TableWrapper>   
                     </Table>
                 </View> 
-                <View style={style.descriptionContainer}>
-                    <Text style={style.descriptionHead}>What You'll Learn</Text>
-                    <Text h5 style={style.descriptionText}>
-                        {classStuff.description}
-                    </Text>
-                </View>
                 {!props.signUp &&
                     <Button
                         title="Sign Up"
@@ -183,52 +183,59 @@ class ClassDetail extends Component {
                     animationType={"fade"}
                     visible={this.state.showModal}
                     onRequestClose={() => this.toggleModal()}
-                    style={style.modal} 
+                    
                 >
-                    <View><Text h4>{`Sign up for ${classStuff.title}`}</Text></View>
-                    <View>
-                    <Input
-                            placeholder="User Name"
-                            leftIcon={
-                                <Icon   
-                                    name="user-o"
-                                    type="font-awesome"
-                                />
-                            } 
-                            onChangeText={value => this.setState({name: value})}
-                            value={this.state.name}
-                       />
-                    </View>
-                   <View style={style.modal}>
-                       <Text style={style.modalTitle}>Sign Up?</Text>
-                       
-                        <Switch 
-                           trackColor={{false: "red", true: "green"}}
-                           onValueChange={() => {
-                                toggleSwitch
-                                this.toggleSignUp()
-                            }}
-                            value={this.state.signUp}
-                            style={style.switch}
-                        />
-                   </View>
-                   <View style={style.modalButtons}>
-                       <Button
-                            title="Cancel"
-                            type="outline"
-                            color="gray"
-                            onPress={() => this.toggleModal()}
-                        />
-                        <Button
-                            title="Submit"
-                            type="solid"
-                            color="blue"
-                            onPress={() => {
-                                this.courseSignUp(classStuff.title)
-                                this.toggleModal()
+                    <View style={style.modal}>
+                        <View style={style.modalTitleView}>
+                            <Text style={style.modalTitle}>{`Sign up for ${classStuff.title}`}</Text>
+                            <Text style={style.modalSubtitle}>{`Instructor: ${classStuff.instructor}`}</Text>
+                            <Text style={style.modalSubtitle}>{`${classStuff.date}`}</Text>
+                        </View>
+                        <View>
+                            <Input
+                                    placeholder="User Name"
+                                    leftIcon={
+                                        <Icon   
+                                            name="user-o"
+                                            type="font-awesome"
+                                        />
+                                    } 
+                                    onChangeText={value => this.setState({name: value})}
+                                    value={this.state.name}
+                                    containerStyle={style.modalInput}
+                            />
+                        </View>
+                        <View style={style.modal}>
+                            <Text style={style.modalTitle}>Sign Up?</Text>
                             
-                            }}
-                        />
+                                <Switch 
+                                trackColor={{false: "red", true: "green"}}
+                                onValueChange={() => {
+                                        toggleSwitch
+                                        this.toggleSignUp()
+                                    }}
+                                    value={this.state.signUp}
+                                    style={style.switch}
+                                />
+                        </View>
+                        <View style={style.modalButtons}>
+                            <Button
+                                    title="Cancel"
+                                    type="outline"
+                                    color="gray"
+                                    onPress={() => this.toggleModal()}
+                                />
+                                <Button
+                                    title="Submit"
+                                    type="solid"
+                                    color="blue"
+                                    onPress={() => {
+                                        this.courseSignUp(classStuff.title)
+                                        this.toggleModal()
+                                    
+                                    }}
+                                />
+                        </View>
                    </View>
                 </Modal>
             </View>
@@ -253,7 +260,7 @@ const style = StyleSheet.create({
     },
     button: {
         backgroundColor: "#faeddd",
-        width: 125,
+        width: 130,
         justifyContent: "center",
         alignSelf: "center",
         margin: 10
@@ -270,7 +277,7 @@ const style = StyleSheet.create({
     },
     tableContainer: {
         flex: 1,
-        padding: 16,
+        padding: 14,
         
     },
     outerContainer: {
@@ -294,8 +301,10 @@ const style = StyleSheet.create({
         // fontWeight: "bold",
         paddingLeft: 5
     }, 
-    descriptionContainer: {
-        
+    details: {
+        fontSize: 15,
+        margin: 10,
+        fontWeight: "700"
     },
     descriptionText: {
         textAlign: "center",
@@ -308,13 +317,28 @@ const style = StyleSheet.create({
         margin: 5
     },
     modal: {
-        margin: 10,
-        flexDirection: "row"
+        padding: 10,
+        flex: 1,
+        backgroundColor: "#faeddd"
     },
-    modalTitle: {
-        fontSize: 18,
+    modalTitleView: {
         alignItems: "center",
         justifyContent: "center"
+    },
+    modalTitle: {
+        fontSize: 24,
+        marginVertical: 30,
+        fontWeight: "bold",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center"
+    },
+    modalSubtitle: {
+        fontSize: 16,
+        paddingBottom: 20
+    },  
+    modalInput: {
+        paddingTop: 30
     },
     modalButtons: {
         flexDirection: "row",
@@ -325,10 +349,11 @@ const style = StyleSheet.create({
         marginTop: 25
     },
     switch: {
-        transform: [{scaleX: 1.0}, {scaleY: 1.3}],
-        paddingLeft: 50
+        alignSelf: "center",
+        justifyContent: "center",
+        transform: [{ scaleX: 2 }, { scaleY: 2 }]
     }
 
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClassDetail);
