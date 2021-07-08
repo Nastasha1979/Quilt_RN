@@ -51,7 +51,7 @@ class Home extends Component {
         
                 
             return(
-                    <ScrollView style={style.scrollV}>
+                    <ScrollView style={style.scrollV} contentContainerStyle={{flexGrow: 1, justifyContent: 'space-between'}}>
                         <GetHome 
                             navigate={navigate}   
                         />

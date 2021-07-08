@@ -13,15 +13,17 @@ import InspireDetail from "./InspireDetailComponent";
 import ArticleDetail from "./ArticleDetailComponent";
 import Favorites from "./FavoritesComponent";
 import SignIn from "./SignInComponent";
+import Frequently from "./FrequentlyComponent";
 import Constants from "expo-constants";
 import SafeAreaView from "react-native-safe-area-view";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator, DrawerItems } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
-import { fetchClasses, fetchComments, fetchClassInfo, fetchArticles, fetchCarousel } from "../redux/ActionCreators";
+import { fetchClasses, fetchComments, fetchClassInfo, fetchArticles, fetchCarousel, fetchQuestions } from "../redux/ActionCreators";
 import { Girassol_400Regular } from "@expo-google-fonts/girassol";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
+
 
 
 
@@ -30,9 +32,20 @@ const mapDispatchToProps = {
     fetchComments, 
     fetchClassInfo, 
     fetchArticles, 
-    fetchCarousel
+    fetchCarousel,
+    fetchQuestions
 };
 
+const FrequentlyNavigator = createStackNavigator (
+    {
+        Frequently: { screen: Frequently }
+    },
+    {
+        defaultNavigationOptions: ({
+            headerShown: false
+        })
+    }
+);
 
 const SignInNavigator = createStackNavigator (
     {
@@ -69,14 +82,8 @@ const AboutNavigator = createStackNavigator (
     },
     {
         defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: "#faeddd"
-            },
-            headerTitleStyle: {
-                color: "#000000",
-                fontWeight: "bold",
-                paddingLeft: 125
-            }
+            headerShown: false
+            
         }
     }
 );
@@ -281,7 +288,19 @@ const SwitchNavigator = createDrawerNavigator(
                     />
                 )
             }
-        }
+        },
+        FAQ: { screen: FrequentlyNavigator,
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon 
+                        name="question"
+                        type="font-awesome-5"
+                        size={20}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
         
     },
     {
@@ -302,12 +321,15 @@ class Switch extends Component {
             Quicksand_600SemiBold
         };
     }
+
+    
     componentDidMount() {
         this.props.fetchClasses();
         this.props.fetchClassInfo();
         this.props.fetchArticles();
         this.props.fetchCarousel();
         this.props.fetchComments();
+        this.props.fetchQuestions();
     }
     render() {
         return(

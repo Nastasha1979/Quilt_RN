@@ -96,8 +96,7 @@ const style = StyleSheet.create({
         opacity: 1 
     },
     imageContainerStyle: {
-        borderRadius: 15,
-        width: Dimensions.get('window').width - 25 
+        borderRadius: 15
     },
     titleStyle: {
         color: "black",

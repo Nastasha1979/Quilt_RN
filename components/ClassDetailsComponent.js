@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { View, ScrollView, StyleSheet, Modal, Switch, Share, Alert, ToastAndroid } from "react-native";
 import { Text, Button, Tile, Icon, Input } from "react-native-elements";
-import { postFavoriteClass } from "../redux/ActionCreators";
+import { postFavoriteClass, postSignUp, searchSignUp } from "../redux/ActionCreators";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
-import { postSignUp } from "../redux/ActionCreators";
 import Loading from "./LoadingComponent";
 
 const mapStateToProps = state => {
@@ -18,7 +17,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     postFavoriteClass: classInfoId => (postFavoriteClass(classInfoId)),
-    postSignUp: (course, name, signUp, isEnabled) => (postSignUp(course, name, signUp, isEnabled)),
+    postSignUp: (course, name, signUp) => (postSignUp(course, name, signUp)),
+    searchSignUp: (classInfo) => (searchSignUp(classInfo))
 }
 
 
@@ -148,7 +148,8 @@ class ClassDetail extends Component {
         this.setState({signUp: !this.state.signUp});  
     }
 
-    unenroll() {
+    unenroll(classInfo) {
+        this.props.searchSignUp(classInfo);
         (Platform.OS === "ios")
                 ? Alert.alert(`You have been unenrolled from the course.`)
                 : ToastAndroid.show(`You have been unenrolled from the course`, ToastAndroid.LONG);
@@ -165,7 +166,7 @@ class ClassDetail extends Component {
 
     courseSignUp(course) {
         if(this.state.signUp === true){
-            this.props.postSignUp(course, this.state.name, this.state.signUp, this.state.isEnabled);
+            this.props.postSignUp(course, this.state.name, this.state.signUp);
             (Platform.OS === "ios")
                 ? Alert.alert(`You have signed up for ${course}.`)
                 : ToastAndroid.show(`You have signed up for ${course}`, ToastAndroid.SHORT)
@@ -191,7 +192,7 @@ class ClassDetail extends Component {
                     favorite={this.props.favoritesClass.includes(classId)}
                     onShowModal={() => this.toggleModal()}
                     signUp={this.state.signUp}
-                    onUnenroll={() => this.unenroll()}
+                    onUnenroll={() => this.unenroll(this.props.classInfo.classInfo)}
                     isLoading={this.props.classInfo.isLoading}
                 />
 

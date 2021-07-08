@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { ScrollView, View, StyleSheet, Alert } from "react-native";
 import { Text, Input, Button } from "react-native-elements";
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
@@ -46,36 +46,37 @@ class Newsletter extends Component {
 
     render() {
         return(
-            <View style={style.container}>
-                <Text style={style.logo}>Needle & Thread</Text>
-                <Text style={style.h2Text}>Newsletter</Text>
-                <Text style={style.h5Text}>Get free tips, tricks, and patterns. Its Free!</Text>
-                <Input
-                    placeholder='First Name'
-                    leftIcon={
-                        <AntDesign name="user" size={24} color="black" />
-                    }
-                    onChangeText={value => this.setState({fName: value})}
-                    value={this.state.fName}
-                />
-                <Input
-                    placeholder='Email'
-                    leftIcon={
-                        <Entypo name="email" size={24} color="black" />
-                    }
-                    inputContainerStyle={style.emailContainer}
-                    onChangeText={value => this.setState({email: value})}
-                    value={this.state.email}
-                />
-                <Button
-                    title="Sign Up"
-                    raised
-                    buttonStyle={style.buttonStyle}
-                    containerStyle={style.btnContainer}
-                    onPress={() => this.handleSubmit()}
-                />
-
-            </View>
+            <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'space-between'}}>
+                <View style={style.container}>
+                    <Text style={style.logo}>Needle & Thread</Text>
+                    <Text style={style.h2Text}>Newsletter</Text>
+                    <Text style={style.h5Text}>Get free tips, tricks, and patterns. Its Free!</Text>
+                    <Input
+                        placeholder='First Name'
+                        leftIcon={
+                            <AntDesign name="user" size={24} color="black" />
+                        }
+                        onChangeText={value => this.setState({fName: value})}
+                        value={this.state.fName}
+                    />
+                    <Input
+                        placeholder='Email'
+                        leftIcon={
+                            <Entypo name="email" size={24} color="black" />
+                        }
+                        inputContainerStyle={style.emailContainer}
+                        onChangeText={value => this.setState({email: value})}
+                        value={this.state.email}
+                    />
+                    <Button
+                        title="Sign Up"
+                        raised
+                        buttonStyle={style.buttonStyle}
+                        containerStyle={style.btnContainer}
+                        onPress={() => this.handleSubmit()}
+                    />
+                </View>
+            </ScrollView>
         );
     }
 }
@@ -89,7 +90,7 @@ const style = StyleSheet.create({
     logo: {
         fontFamily: "Girassol_400Regular",
         fontSize: 38,
-        marginTop: 70
+        marginTop: 50
     },
     h2Text: {
         textAlign: "center",
@@ -118,7 +119,7 @@ const style = StyleSheet.create({
                
     },
     btnContainer: {
-        marginTop: 50
+        marginVertical: 25
     }
 
     

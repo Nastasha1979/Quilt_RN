@@ -5,25 +5,22 @@ import { SwipeRow } from "react-native-swipe-list-view";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
-import { deleteFavoriteClass } from "../redux/ActionCreators";
+import { deleteFavoriteClass, deleteFavoriteArticle } from "../redux/ActionCreators";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
-
+import { createBottomTabNavigator } from "react-navigation-tabs";
 
 const mapStateToProps = state => {
     return {
-        classInfo: state.classInfo,
-        favoritesClass: state.favoritesClass,
         articles: state.articles,
         favoritesArticle: state.favoritesArticle
     };
 };
 
 const mapDispatchToProps = {
-    deleteFavoriteClass: classInfoId => deleteFavoriteClass(classInfoId),
     deleteFavoriteArticle: articleId => deleteFavoriteArticle(articleId)
 };
 
-class Favorites extends Component {
+class FavoriteArticles extends Component {
     constructor(props){
         super(props);
         this.state ={
@@ -35,12 +32,13 @@ class Favorites extends Component {
     }
 
     static navigationOptions = {
-        title: "My Favorites"
+        title: "My Favorite Articles"
     }
 
 
     render() {
         const { navigate } = this.props.navigation;
+
 
         const renderFavoriteArticles = ({item}) => {
             return(
@@ -70,44 +68,9 @@ class Favorites extends Component {
             );
         }
 
-        const renderFavoriteClasses = ({item}) => {
-            return(
-                <SwipeRow rightOpenValue={-100} style={style.swipeRow}>
-                    <View style={style.deleteView}>							
-                        <TouchableOpacity
-                            style={style.deleteTouchable}
-                            onPress={() => this.props.deleteFavoriteClass(item.id)}
-                        >
-                        <Text style={style.deleteText}>Remove</Text> 
-                        </TouchableOpacity>
-                    </View>
-                    <View>
-                        <ListItem
-                            onPress={() => navigate("ClassDetail", {classId: item.id})}
-                            containerStyle={style.listItemStyle}
-                        >
-                            <Avatar source={{uri: baseUrl + item.picUrl}} rounded/>
-                            <ListItem.Content>
-                                <ListItem.Title style={style.listItemTitle}>{item.title}</ListItem.Title>
-                                <ListItem.Subtitle style={style.listItemSubtitle}>{item.instructor}</ListItem.Subtitle> 
-                            </ListItem.Content> 
-                        </ListItem>
-                    </View>
-                </SwipeRow>
-            );
-        }
-
-
         return(
             
             <ScrollView style={style.container}>
-                {console.log(this.props.classInfo.classInfo)}
-                <Text style={style.favoriteTitle}>Favorite Classes</Text>
-                <FlatList
-                    data={this.props.classInfo.classInfo.filter(classInfo => this.props.favoritesClass.includes(classInfo.id))}
-                    renderItem={renderFavoriteClasses}
-                    keyExtractor={item => item.id.toString()}
-                />
                 <Text style={style.favoriteTitle}>Favorite Articles</Text>
                 <FlatList
                     data={this.props.articles.articles.filter(article => this.props.favoritesArticle.includes(article.key))}
@@ -119,6 +82,7 @@ class Favorites extends Component {
         );
     }
 }
+
 
 
 const style = StyleSheet.create({
@@ -165,4 +129,4 @@ const style = StyleSheet.create({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
+export default connect(mapStateToProps, mapDispatchToProps)(FavoriteArticles);

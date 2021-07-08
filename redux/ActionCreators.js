@@ -1,5 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
+import { classList } from "./classList";
 
 
 export const fetchClasses = () => dispatch => {
@@ -355,12 +356,11 @@ export const addComment = comment => ({
 });
 
 
-export const postSignUp = (course, name, signUp, isEnabled) => dispatch => {
+export const postSignUp = (course, name, signUp) => dispatch => {
     const newSignUp = {
         signUp,
         course,
         name,
-        isEnabled: isEnabled,
         date: new Date().toISOString()
     };
 
@@ -395,5 +395,69 @@ export const addSignUp = newSignUp => ({
     payload: newSignUp
 });
 
+export const searchSignUp = (classInfo) => dispatch => {   
+
+    return fetch(baseUrl + "classList/" + classInfo.length - 5, {
+        method: "DELETE",
+        body: JSON.stringify(searchSignUp),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            const error = new Error(`Error ${response.status}: ${response.statusText}`);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => { throw error; }
+    )
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .then(response => dispatch(searchForSignUp(response)))
+    .catch(error => {
+        console.log("Search Sign Up", error.message);
+    });
+};
+
+export const searchForSignUp = () => ({
+    type: ActionTypes.SEARCH_SIGN_UP
+});
 
 
+
+export const fetchQuestions = () => dispatch => {
+
+    dispatch(questionsLoading());
+
+    return fetch(baseUrl + "frequently")
+        .then(response => {
+            if(response.ok){
+                return response;
+            } else {
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            const errMess = new Error(error.message);
+            throw errMess;
+        })
+        .then(response => response.json())
+        .then(response => dispatch(addQuestions(response)))
+        .catch(error => dispatch(questionsFailed(error.message)));
+};
+
+export const questionsLoading = () => ({
+    type: ActionTypes.QUESTIONS_LOADING
+});
+
+
+export const addQuestions = response => ({
+    type: ActionTypes.ADD_QUESTIONS,
+    payload: response
+});

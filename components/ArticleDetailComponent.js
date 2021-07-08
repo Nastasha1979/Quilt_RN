@@ -36,6 +36,7 @@ function RenderArticle(props){
                         name={props.favorite ? "heart" : "heart-o"}
                         type="font-awesome"
                         color="red"
+                        raised
                         onPress={() => props.favorite ? console.log("Already Set to Favorite") : props.markFavorite()}
                     />
                     <Button 
@@ -97,7 +98,12 @@ const style = StyleSheet.create({
     },
     articleTitle: {
         fontFamily: "Quicksand_600SemiBold",
-        fontSize: 30
+        fontSize: 30,
+        textAlign: "center",
+        textShadowColor: "gray",
+        textShadowOffset: {width: -1.5, height: 1},
+        textShadowRadius: 2,
+        marginBottom: 5
     },
     author: {
         fontFamily: "Quicksand_400Regular",
@@ -121,19 +127,20 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         margin: 10,
-        backgroundColor: "#faeddd"
+        backgroundColor: "#fdf9f2"
     },
     paragraphText: {
         fontSize: 20,
         margin: 5,
-        padding: 10
+        padding: 10,
+        textAlign: "center"
         
     },
     paragraphTextBigger: {
         fontSize: 36,
         margin: 5,
-        padding: 10
-        
+        padding: 10,
+        textAlign: "center"
     }
 })
 

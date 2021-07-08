@@ -25,13 +25,13 @@ class SignInTab extends Component {
     }
 
     static navigationOptions = {
-        tabBarIcon: ({tintColor}) => {
+        tabBarIcon: ({tintColor}) => (
             <Icon
-                name="sign-in"
-                type="font-awesome"
+                name="sign-in-alt"
+                type="font-awesome-5"
                 iconStyle={{color: tintColor}}
             />
-        }
+        )
     }
 
     handleSignIn() {
@@ -160,13 +160,13 @@ class RegisterTab extends Component {
     }
 
     static navigationOptions = {
-        tabBarIcon: ({tintColor}) => {
+        tabBarIcon: ({tintColor}) => (
             <Icon
                 name="user-plus"
-                type="font-awesome"
+                type="font-awesome-5"
                 iconStyle={{color: tintColor}}
             />
-        }
+        )
     }
     handleRegister() {
         console.log(JSON.stringify(this.state));
@@ -250,16 +250,19 @@ class RegisterTab extends Component {
 
 const SignIn = createBottomTabNavigator(
     {
-        SignIn: SignInTab,
+        "Sign In": SignInTab,
         Register: RegisterTab
     },
     {
         tabBarOptions: {
-            activeBackgroundColor: "#faeddd",
-            inactiveBackgroundColor: "CEC8FF",
-            activeTintColor: "black",
+            activeBackgroundColor: "#f4dbbb",
+            inactiveBackgroundColor: "#faeddd",
+            activeTintColor: "#000000",
             inactiveTintColor: "#808080",
-            labelStyle: {fontSize: 12}
+            labelStyle: {fontSize: 16, fontWeight: "bold"},
+            showIcon: true,
+            style: {height: 60}
+
         }
     }
 );
