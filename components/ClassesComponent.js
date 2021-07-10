@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { ScrollView, View, Text, FlatList, StyleSheet, Dimensions} from "react-native";
-import { Card, Button, ListItem, Image, Tile } from "react-native-elements";
+import { ScrollView, Text, FlatList, StyleSheet, Dimensions} from "react-native";
+import { ListItem, Tile } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";

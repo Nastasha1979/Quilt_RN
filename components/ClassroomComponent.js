@@ -4,7 +4,7 @@ import { View, ScrollView, StyleSheet} from "react-native";
 import { Text, ListItem, Input, Button, Icon, Avatar } from "react-native-elements";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {baseUrl} from "../shared/baseUrl";
-import { classesFailed, postComment } from "../redux/ActionCreators";
+import { postComment } from "../redux/ActionCreators";
 
 const mapStateToProps = state => {
     return{

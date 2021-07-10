@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { ScrollView, View, Modal, Image, StyleSheet, Dimensions } from "react-native";
+import { ScrollView, Modal, Image, StyleSheet, Dimensions } from "react-native";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import ImageZoom from "react-native-image-pan-zoom";
-import { NavigationEvents } from "react-navigation";
-import { Button, Text, Icon } from "react-native-elements";
+import { Button, Text } from "react-native-elements";
 
 const mapStateToProps = state => {
     return{

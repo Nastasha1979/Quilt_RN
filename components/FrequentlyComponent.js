@@ -3,7 +3,6 @@ import { ScrollView, View, FlatList, StyleSheet } from "react-native";
 import { Text, ListItem, Icon } from "react-native-elements";
 import { SwipeRow } from "react-native-swipe-list-view";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Collapse, CollapseHeader, CollapseBody, AccordionList } from "accordion-collapse-react-native";
 import { connect } from "react-redux"; 
 import Loading from "./LoadingComponent";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
@@ -67,7 +66,10 @@ class Frequently extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
-         
+        
+        if(this.props.frequently.isLoading){
+            return <Loading />
+        }
 
         return(
             <ScrollView>

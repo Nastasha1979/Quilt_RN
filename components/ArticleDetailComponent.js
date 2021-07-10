@@ -2,7 +2,6 @@ import React, { Component, useState } from "react";
 import { ScrollView, View, StyleSheet  } from "react-native";
 import { Text, Icon, Button } from "react-native-elements";
 import { connect } from "react-redux";
-import { baseUrl } from "../shared/baseUrl";
 import { postFavoriteArticle } from "../redux/ActionCreators";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 

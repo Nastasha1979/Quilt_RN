@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { ScrollView, FlatList, StyleSheet, View} from "react-native";
+import { ScrollView, FlatList, StyleSheet } from "react-native";
 import { ListItem, Text, Avatar } from "react-native-elements";
 import { baseUrl } from "../shared/baseUrl";
 import { connect } from "react-redux";
-import { LinearGradient } from "expo-linear-gradient";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 
 const mapStateToProps = state => {

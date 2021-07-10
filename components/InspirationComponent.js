@@ -3,7 +3,7 @@ import { baseUrl } from "../shared/baseUrl";
 import { connect } from "react-redux";
 import { postCarousel } from "../redux/ActionCreators";
 import { View, Text, ScrollView, FlatList, StyleSheet, Modal, Alert, Image } from "react-native";
-import { Tile, ListItem, Icon, Button, Input } from "react-native-elements";
+import { Tile, Icon, Button, Input } from "react-native-elements";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 import * as ImagePicker from "expo-image-picker";
 

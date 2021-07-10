@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FlatList, View, StyleSheet, ScrollView } from "react-native";
-import { Text, ListItem, Button, Avatar } from "react-native-elements";
+import { Text, ListItem, Avatar } from "react-native-elements";
 import { SwipeRow } from "react-native-swipe-list-view";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
