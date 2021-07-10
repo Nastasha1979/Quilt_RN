@@ -356,11 +356,12 @@ export const addComment = comment => ({
 });
 
 
-export const postSignUp = (course, name, signUp) => dispatch => {
+export const postSignUp = (course, name, signUp, courseId) => dispatch => {
     const newSignUp = {
         signUp,
         course,
         name,
+        courseId,
         date: new Date().toISOString()
     };
 
@@ -464,4 +465,31 @@ export const questionsFailed = errMess => ({
 export const addQuestions = questions => ({
     type: ActionTypes.ADD_QUESTIONS,
     payload: questions
+});
+
+export const fetchClassList = () => dispatch => {
+    
+
+    return fetch(baseUrl + "classList")
+        .then(response => {
+            if(response.ok) {
+                return response;
+            } else {
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            const errMess = new Error(error.message);
+            throw errMess;
+        })
+    .then(response => response.json())
+    .then(classList => dispatch(addClassList(classList)))
+    .catch(error => dispatch(classesFailed(error.message)));
+};
+
+export const addClassList = classList => ({
+    type: ActionTypes.GET_CLASS_LIST,
+    payload: classList
 });

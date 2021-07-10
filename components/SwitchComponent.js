@@ -20,7 +20,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator, DrawerItems } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
-import { fetchClasses, fetchComments, fetchClassInfo, fetchArticles, fetchCarousel, fetchQuestions } from "../redux/ActionCreators";
+import { fetchClasses, fetchComments, fetchClassInfo, fetchArticles, fetchCarousel, fetchQuestions, fetchClassList } from "../redux/ActionCreators";
 import { Girassol_400Regular } from "@expo-google-fonts/girassol";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 
@@ -33,7 +33,8 @@ const mapDispatchToProps = {
     fetchClassInfo, 
     fetchArticles, 
     fetchCarousel,
-    fetchQuestions
+    fetchQuestions,
+    fetchClassList
 };
 
 const FrequentlyNavigator = createStackNavigator (
@@ -336,6 +337,7 @@ class Switch extends Component {
         this.props.fetchCarousel();
         this.props.fetchComments();
         this.props.fetchQuestions();
+        this.props.fetchClassList();
     }
     render() {
         return(

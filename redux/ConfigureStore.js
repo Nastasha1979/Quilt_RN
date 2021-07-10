@@ -33,7 +33,7 @@ export const ConfigureStore = () => {
             favoritesArticle,
             classList,
             carouselImages,
-            frequently
+            frequently,
         }),
         applyMiddleware(thunk, logger)
     );

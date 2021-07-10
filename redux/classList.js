@@ -7,8 +7,8 @@ export const classList = (state = { errMess: null, classList: [] }, action) => {
             const list = action.payload;
             list.id = state.classList.length - 1;
             return{...state, classList: state.classList.concat(list)};
-        case ActionTypes.SEARCH_SIGN_UP:
-            return {...state, classList: state.classList.pop()};
+        case ActionTypes.GET_CLASS_LIST:
+            return {...state, errMess: null, classList: action.payload};
         default:
             return state;        
     }                                    

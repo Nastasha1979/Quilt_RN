@@ -17,7 +17,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     postFavoriteClass: classInfoId => (postFavoriteClass(classInfoId)),
-    postSignUp: (course, name, signUp) => (postSignUp(course, name, signUp)),
+    postSignUp: (course, name, signUp, courseId) => (postSignUp(course, name, signUp, courseId)),
     searchSignUp: (classInfo) => (searchSignUp(classInfo))
 }
 
@@ -164,9 +164,9 @@ class ClassDetail extends Component {
         this.props.postFavoriteClass(classInfoId);
     }
 
-    courseSignUp(course) {
+    courseSignUp(course, courseId) {
         if(this.state.signUp === true){
-            this.props.postSignUp(course, this.state.name, this.state.signUp);
+            this.props.postSignUp(course, this.state.name, this.state.signUp, courseId );
             (Platform.OS === "ios")
                 ? Alert.alert(`You have signed up for ${course}.`)
                 : ToastAndroid.show(`You have signed up for ${course}`, ToastAndroid.SHORT)
@@ -248,7 +248,7 @@ class ClassDetail extends Component {
                                     type="solid"
                                     color="blue"
                                     onPress={() => {
-                                        this.courseSignUp(classStuff.title)
+                                        this.courseSignUp(classStuff.title, classStuff.id)
                                         this.toggleModal()
                                     
                                     }}
