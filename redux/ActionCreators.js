@@ -448,7 +448,7 @@ export const fetchQuestions = () => dispatch => {
             throw errMess;
         })
         .then(response => response.json())
-        .then(response => dispatch(addQuestions(response)))
+        .then(questions => dispatch(addQuestions(questions), console.log(questions)))
         .catch(error => dispatch(questionsFailed(error.message)));
 };
 
@@ -456,8 +456,12 @@ export const questionsLoading = () => ({
     type: ActionTypes.QUESTIONS_LOADING
 });
 
+export const questionsFailed = errMess => ({
+    type: ActionTypes.QUESTIONS_FAILED,
+    payload: errMess
+});
 
-export const addQuestions = response => ({
+export const addQuestions = questions => ({
     type: ActionTypes.ADD_QUESTIONS,
-    payload: response
+    payload: questions
 });

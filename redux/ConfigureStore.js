@@ -9,6 +9,7 @@ import { articles } from "./articles";
 import { carousel } from "./carousel";
 import { comments } from "./comments";
 import { classList } from "./classList";
+import { frequently } from "./frequently";
 import { carouselImages } from "./carouselImages";
 import { favoritesClass } from "./favoritesClass";
 import { favoritesArticle } from "./favoritesArticle";
@@ -31,7 +32,8 @@ export const ConfigureStore = () => {
             favoritesClass,
             favoritesArticle,
             classList,
-            carouselImages
+            carouselImages,
+            frequently
         }),
         applyMiddleware(thunk, logger)
     );

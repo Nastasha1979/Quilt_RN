@@ -41,9 +41,15 @@ const FrequentlyNavigator = createStackNavigator (
         Frequently: { screen: Frequently }
     },
     {
-        defaultNavigationOptions: ({
-            headerShown: false
-        })
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: "#faeddd"
+            },
+            headerTitleStyle: {
+                color: "#000000",
+                fontWeight: "bold"
+            }
+        }
     }
 );
 

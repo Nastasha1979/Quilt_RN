@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, StyleSheet} from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Card, Text, Button, Icon } from "react-native-elements";
 import * as MailComposer from "expo-mail-composer";
 import { Quicksand_400Regular, Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
@@ -33,14 +33,24 @@ class AboutTab extends Component {
                 <Card>
                     <Text style={style.mainTitle}>We are Quilt Lovers!</Text>
                     <Text style={style.additionalText}>I am a hobby quilters who wishes to share knowledge to any and all who want it. Please browse our app in whatever way works for you and participate with other quilt-lovers. Take advantage of our classes to upgrade your skills or sign up four our newsletter for tips sent straight to your inbox!</Text>
-                    <Icon
-                        name="plus-square"
-                        type="font-awesome-5"
-                        raised
-                        containerStyle={style.newsletterIconContainer}
-                        iconStyle={style.newsletterIconStyle}
-                        onPress={() => navigate("Newsletter")}
-                    />
+                    <View style={style.iconView}>
+                        <Icon
+                            name="chalkboard-teacher"
+                            type="font-awesome-5"
+                            raised
+                            containerStyle={style.newsletterIconContainer}
+                            iconStyle={style.newsletterIconStyle}
+                            onPress={() => navigate("Classes")}
+                        />
+                        <Icon
+                            name="plus-square"
+                            type="font-awesome-5"
+                            raised
+                            containerStyle={style.newsletterIconContainer}
+                            iconStyle={style.newsletterIconStyle}
+                            onPress={() => navigate("Newsletter")}
+                        />
+                    </View>
                 </Card>
             </ScrollView>
         );
@@ -159,6 +169,11 @@ const style = StyleSheet.create({
         fontSize: 20,
         fontFamily: "Quicksand_400Regular",
         textAlign: "center"
+    },
+    iconView: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center"
     },
     container: {
         flex: 1

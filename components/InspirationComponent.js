@@ -113,7 +113,7 @@ class Inspiration extends Component {
 
 
         return(
-            <ScrollView>
+            <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'space-between'}}>
                 <View style={style.viewIconContainerStyle}>
                     <Icon
                         name="plus"
@@ -136,7 +136,7 @@ class Inspiration extends Component {
                     animationType={"slide"}
                     
                 >
-                    <ScrollView>
+                    <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'space-between'}}>
                     <View style={style.modalWhole}>
                         <Text style={style.modalHeader}>Upload You Quilt Creation</Text>
                         <View style={style.modalInputView}>
